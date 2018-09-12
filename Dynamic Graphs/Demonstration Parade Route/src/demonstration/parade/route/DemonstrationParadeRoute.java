@@ -13,7 +13,6 @@ public class DemonstrationParadeRoute {
 
     int numV;
     int numE;
-    
         
     /**
      * @param args the command line arguments
