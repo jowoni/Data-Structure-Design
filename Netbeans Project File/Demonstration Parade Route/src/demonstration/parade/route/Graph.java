@@ -8,13 +8,14 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.LinkedList;
+import java.util.ArrayList;
 
 /**
  *
  * @author Michael
  */
 public class Graph {
-    private Map<String, List<Edge>> all_intersection = new HashMap<String, List<Edge>>();
+    private Map<Vertex, List<Edge>> all_intersection = new HashMap<Vertex, List<Edge>>();
     private Map<String, List<Edge>> parade_intersection = new HashMap<String, List<Edge>>();
     private int numVertex = 100;
     /**
@@ -28,13 +29,14 @@ public class Graph {
         {
             g.adjacencyList.put("입력노드", new LinkedList<Edge>() );
         }*/
-        g.all_intersection.put("남대문", new LinkedList<Edge>() );
-        g.all_intersection.put("시청", new LinkedList<Edge>() );
+        g.all_intersection.put(new Vertex(), new ArrayList<Edge>() );
+       /* g.all_intersection.put("시청", new LinkedList<Edge>() );
         g.all_intersection.put("광화문", new LinkedList<Edge>() );
         g.all_intersection.put("세종", new LinkedList<Edge>() );
         g.all_intersection.put("서린", new LinkedList<Edge>() );
+        */
         
-        g.all_intersection.get("남대문").add(e);
+        //g.all_intersection.get("남대문").add(e);
         /*엑셀 파일에 있는대로 교차로별 인접 교차로 목록을 Edge에 불러와 변수 설정 후
         
         */

@@ -8,10 +8,9 @@ package demonstration.parade.route;
 /**
  *
  * @author Michael
- * @param <E> the type of value stored in this Edge
+ //* @param <E> the type of value stored in this Edge
  */
-public class Edge<E> {
-    private Vertex<E> source;
-    private Vertex<E> destination;
+public class Edge {
+    private Vertex destNode;
     private double weight;
 }

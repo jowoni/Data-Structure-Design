@@ -8,8 +8,8 @@ package demonstration.parade.route;
 /**
  *
  * @author Michael
- * @param <E> the type of value stored in this Edge
+ //* @param <E> the type of value stored in this Edge
  */
-public class Vertex<E> {
-    
+public class Vertex {
+    String name;
 }
