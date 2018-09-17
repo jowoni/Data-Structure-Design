@@ -10,6 +10,23 @@ package demonstration.parade.route;
  * @author Michael
  //* @param <E> the type of value stored in this Edge
  */
-public class Vertex {
-    String name;
+public class Vertex 
+{
+    private String intersectionName;
+    private int numEdges;
+    
+    String getName()
+    {
+        return intersectionName;
+    }
+    
+    void setName(String n)
+    {
+        intersectionName = n;
+    }
+    
+    void setNumEdges(int n)
+    {
+        numEdges = n;
+    }
 }

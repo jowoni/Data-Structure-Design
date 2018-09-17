@@ -8,9 +8,35 @@ package demonstration.parade.route;
 /**
  *
  * @author Michael
- //* @param <E> the type of value stored in this Edge
  */
-public class Edge {
+public class Edge 
+{
+    private Vertex srcNode;
     private Vertex destNode;
-    private double weight;
+    private float weight;
+ 
+    void setSrcNode(Vertex v)
+    {
+        srcNode = v;
+    }
+    Vertex getSrcNode()
+    {
+        return srcNode;
+    }
+    void setDestNode(Vertex v)
+    {
+        destNode = v;
+    }
+    Vertex getDestNode()
+    {
+        return destNode;
+    }
+    void setWeight(float w)
+    {
+        weight = w;
+    }
+    float getWeight()
+    {
+        return weight;
+    }
 }
