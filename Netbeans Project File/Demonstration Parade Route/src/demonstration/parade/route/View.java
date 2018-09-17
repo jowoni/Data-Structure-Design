@@ -31,7 +31,7 @@ public class View extends JFrame //View 클래스는 유저에게 화면을 보�
     JMenuBar menuBar;                //상단의 메뉴바
     JMenu menu1, menu2, menu3;       
     JMenuItem menuList;
-    JButton boostTime, slowTime, stopTime, setTime, Restart; 
+    JButton start, boostTime, reverseTime, slowTime, stopTime, setTime, Reset; 
     JTextField timeTextField;
     JLabel timeTextLabel;
     

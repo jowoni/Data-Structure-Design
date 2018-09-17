@@ -14,14 +14,14 @@ import java.util.ArrayList;
  */
 public class Dynamic_Graph 
 {
-    private Map<Vertex, ArrayList<Edge>> all_intersection = new HashMap<Vertex, ArrayList<Edge>>();
+    private Map<Node, ArrayList<Edge>> all_intersection = new HashMap<Node, ArrayList<Edge>>();
 
     public void addEdge()
     {
         
     }
     
-    public Edge getEdge(Vertex src, Vertex dest)
+    public Edge getEdge(Node src, Node dest)
     {
         for(Edge i : all_intersection.get(src))
         {
@@ -38,17 +38,22 @@ public class Dynamic_Graph
         
     }
     
-    public int numEdges(Vertex v)
+    public int numEdges(Node v)
     {
         return all_intersection.get(v).size();
     }
     
-    public void addVertex(int name, int numEdges)
+    public void addNode(int name, int numEdges)
+    {
+        
+    }
+    
+    public void getNode()
     {
         
     }
 
-    public void removeVertex()
+    public void removeNode()
     {
         
     }

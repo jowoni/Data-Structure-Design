@@ -10,10 +10,11 @@ package demonstration.parade.route;
  * @author Michael
  //* @param <E> the type of value stored in this Edge
  */
-public class Vertex 
+public class Node 
 {
     private String intersectionName;
     private int numEdges;
+    private boolean active = false;
     
     String getName()
     {
@@ -25,8 +26,23 @@ public class Vertex
         intersectionName = n;
     }
     
+    int getNumEdges()
+    {
+        return numEdges;
+    }
+    
     void setNumEdges(int n)
     {
         numEdges = n;
+    }
+    
+    boolean getActive()
+    {
+        return active;
+    }
+    
+    void setActive(boolean b)
+    {
+        active = b;
     }
 }

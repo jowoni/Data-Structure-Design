@@ -11,32 +11,37 @@ package demonstration.parade.route;
  */
 public class Edge 
 {
-    private Vertex srcNode;
-    private Vertex destNode;
+    private Node srcNode;
+    private Node destNode;
     private float weight;
  
-    void setSrcNode(Vertex v)
-    {
-        srcNode = v;
-    }
-    Vertex getSrcNode()
+    Node getSrcNode()
     {
         return srcNode;
     }
-    void setDestNode(Vertex v)
+    
+    void setSrcNode(Node v)
     {
-        destNode = v;
+        srcNode = v;
     }
-    Vertex getDestNode()
+    
+    Node getDestNode()
     {
         return destNode;
     }
-    void setWeight(float w)
+    
+    void setDestNode(Node v)
     {
-        weight = w;
+        destNode = v;
     }
+    
     float getWeight()
     {
         return weight;
+    }
+   
+    void setWeight(float w)
+    {
+        weight = w;
     }
 }
