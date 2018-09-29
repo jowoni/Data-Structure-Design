@@ -8,6 +8,19 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.IOException;
+
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.*;
+
 /**
  *
  * @author Michael
@@ -62,6 +75,34 @@ public class Dynamic_Graph
     {
         View v = new View();
         Controller c = new Controller(v);
+        
+        try{
+
+    //File fileName = new File("C://sadegh//test.xlsx");
+    InputStream inp = new FileInputStream("C://sadegh//test.xlsx");
+
+    Workbook wb = WorkbookFactory.create(inp);
+
+    Sheet sheet = wb.getSheetAt(0);
+    Row row = sheet.getRow(2);
+    Cell cell = row.getCell(3);
+    if (cell == null)
+        cell = row.createCell(3);
+    System.out.println(cell.toString());
+
+
+    }catch(java.lang.NullPointerException e5){
+            //e5.notify();
+            }catch (org.apache.poi.openxml4j.exceptions.InvalidFormatException e3) {
+
+                e3.printStackTrace();
+
+            }
+catch (IOException e1) {
+
+                e1.printStackTrace();
+
+            }
          
         /*
         Dynamic_Graph g = new Dynamic_Graph();
