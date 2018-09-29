@@ -10,6 +10,17 @@ package demonstration.parade.route;
  * @author Michael
  //* @param <E> the type of value stored in this Edge
  */
-public class Vertex {
+public class Vertex 
+{
     String name;
+    /*
+    public Vertex(String name)
+    {
+        this.name = name;
+    }   
+    */
+    public void setName(String name)
+    {
+        this.name = name;
+    }
 }
