@@ -37,7 +37,7 @@ public class View extends JFrame //View 클래스는 유저에게 화면을 보�
     
     void addButtonTimeListener(ActionListener al)
     {
-        boostTime.addActionListener(al);
+        //boostTime.addActionListener(al);
     }
     
     public View() //고 함수는 GUI가 본격적으로 실행되게 하는 함수이다. 메인 함수에서 사용된다.
