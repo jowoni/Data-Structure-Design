@@ -7,42 +7,40 @@ package demonstration.parade.route;
 
 /**
  *
- * @author Michael
- //* @param <E> the type of value stored in this Edge
+ * @author Michael //* @param <E> the type of value stored in this Edge
  */
-public class Node 
-{
-    private String intersectionName;
+public class Node {
+
+    private String intscName;
     private int numEdges;
     private boolean active = false;
-    
-    String getName()
-    {
-        return intersectionName;
+
+    Node(String intsc_name, int num_edges) {
+        intscName = intsc_name;
+        numEdges = num_edges;
     }
-    
-    void setName(String n)
-    {
-        intersectionName = n;
+
+    String getName() {
+        return intscName;
     }
-    
-    int getNumEdges()
-    {
+
+    void setName(String n) {
+        intscName = n;
+    }
+
+    int getNumEdges() {
         return numEdges;
     }
-    
-    void setNumEdges(int n)
-    {
+
+    void setNumEdges(int n) {
         numEdges = n;
     }
-    
-    boolean getActive()
-    {
+
+    boolean getActive() {
         return active;
     }
-    
-    void setActive(boolean b)
-    {
+
+    void setActive(boolean b) {
         active = b;
     }
 }

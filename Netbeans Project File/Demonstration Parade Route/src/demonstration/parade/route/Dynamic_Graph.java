@@ -13,14 +13,16 @@ import java.util.ArrayList;
  */
 public class Dynamic_Graph 
 {
-    private Map<Node, ArrayList<Edge>> all_intersection = new HashMap<Node, ArrayList<Edge>>();
+    private static Map<String, ArrayList<Edge>> all_intersection = new HashMap<String, ArrayList<Edge>>();
     
     public static void main(String[] args) throws Exception
     {
         View v = new View();
         Controller c = new Controller(v);
+        ExcelRead input_all = new ExcelRead(all_intersection);
     }
 
+    /*
     public void addEdge()
     {
         
@@ -62,4 +64,5 @@ public class Dynamic_Graph
     {
         
     }
+    */
 }

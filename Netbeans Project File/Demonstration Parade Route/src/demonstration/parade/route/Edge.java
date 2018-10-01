@@ -11,10 +11,17 @@ package demonstration.parade.route;
  */
 public class Edge 
 {
-    private Node srcNode;
-    private Node destNode;
+    private String srcNode;
+    private String destNode;
     private float weight;
- 
+    
+    Edge(String srcNode_, String destNode_, float weight_){
+        srcNode = srcNode_;
+        destNode = destNode_;
+        weight = weight_;
+    }
+            
+    /*
     Node getSrcNode()
     {
         return srcNode;
@@ -44,4 +51,5 @@ public class Edge
     {
         weight = w;
     }
+    */
 }
