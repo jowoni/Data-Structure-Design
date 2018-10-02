@@ -7,6 +7,7 @@ package demonstration.parade.route;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.LinkedList;
 /**
  *
  * @author Michael
@@ -14,55 +15,12 @@ import java.util.ArrayList;
 public class Dynamic_Graph 
 {
     private static Map<String, ArrayList<Edge>> all_intersection = new HashMap<String, ArrayList<Edge>>();
+    private static Map<String, ParadeInfo> paradeInfoList = new HashMap<String, ParadeInfo>();
     
     public static void main(String[] args) throws Exception
     {
         View v = new View();
         Controller c = new Controller(v);
-        ExcelRead input_all = new ExcelRead(all_intersection);
+        ExcelRead input_all = new ExcelRead(all_intersection, paradeInfoList);
     }
-
-    /*
-    public void addEdge()
-    {
-        
-    }
-    
-    public Edge getEdge(Node src, Node dest)
-    {
-        for(Edge i : all_intersection.get(src))
-        {
-            if(i.getDestNode().getName().equals(dest.getName()))
-            {
-                return i;
-            }
-        }
-        return null;
-    }
-
-    public void removeEdge()
-    {
-        
-    }
-    
-    public int numEdges(Node v)
-    {
-        return all_intersection.get(v).size();
-    }
-    
-    public void addNode(int name, int numEdges)
-    {
-        
-    }
-    
-    public void getNode()
-    {
-        
-    }
-
-    public void removeNode()
-    {
-        
-    }
-    */
 }
