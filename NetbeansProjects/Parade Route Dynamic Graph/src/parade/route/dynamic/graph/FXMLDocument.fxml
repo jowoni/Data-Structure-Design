@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="parade.route.dynamic.graph.FXMLDocumentController">
+   <children>
+      <TabPane prefHeight="800.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="Parade Route">
+               <content>
+                  <SplitPane dividerPositions="0.5" prefHeight="679.0" prefWidth="1118.0">
+                     <items>
+                        <ImageView fitHeight="756.0" fitWidth="987.0">
+                           <image>
+                              <Image url="@../../../../Background%20Map.png" />
+                           </image>
+                        </ImageView>
+                        <AnchorPane prefHeight="771.0" prefWidth="432.0">
+                           <children>
+                              <Label layoutX="26.0" layoutY="23.0" prefHeight="35.0" prefWidth="50.0" text="Time :" />
+                              <TextArea layoutX="76.0" layoutY="23.0" prefHeight="35.0" prefWidth="182.0" />
+                              <Button layoutX="23.0" layoutY="88.0" mnemonicParsing="false" text="Pause" />
+                              <Button layoutX="104.0" layoutY="88.0" mnemonicParsing="false" text="Play" />
+                              <Button layoutX="183.0" layoutY="88.0" mnemonicParsing="false" text="Reset" />
+                              <Button layoutX="23.0" layoutY="131.0" mnemonicParsing="false" text="Backward" />
+                              <Button layoutX="104.0" layoutY="131.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="70.0" text="Forward" />
+                              <Button layoutX="183.0" layoutY="131.0" mnemonicParsing="false" text="Boost" />
+                              <Label layoutX="85.0" layoutY="170.0" prefHeight="37.0" prefWidth="122.0" text="Time Control Slide" />
+                              <Separator layoutX="43.0" layoutY="234.0" prefWidth="200.0" />
+                              <ProgressBar layoutX="43.0" layoutY="272.0" prefWidth="200.0" progress="0.0" />
+                              <Slider layoutX="45.0" layoutY="207.0" prefHeight="14.0" prefWidth="202.0" />
+                              <Label layoutX="74.0" layoutY="248.0" text="Overall Parade Progress" />
+                              <TextArea layoutX="14.0" layoutY="462.0" prefHeight="295.0" prefWidth="258.0" />
+                              <TextArea layoutX="14.0" layoutY="313.0" prefHeight="130.0" prefWidth="259.0" />
+                           </children>
+                        </AnchorPane>
+                     </items>
+                  </SplitPane>
+               </content>
+            </Tab>
+          <Tab text="Progress Status" />
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
