@@ -33,8 +33,7 @@ public class ParadeRouteDynamicGraph extends Application {
     
     private static Map<String, ArrayList<Edge>> all_intersection;
     private static Map<String, ParadeInfo> paradeInfoList;
-    private static LocalDate currentDate;
-    private static LocalTime simulationTime;
+    private static LocalDate simulationDate;
     
     public static void main(String[] args) throws Exception {
         launch(args);
@@ -43,7 +42,11 @@ public class ParadeRouteDynamicGraph extends Application {
         
         //View v = new View();
         //Controller c = new Controller(v);
-        ExcelRead input_all = new ExcelRead(all_intersection, paradeInfoList);
+        ExcelRead input_all = new ExcelRead(all_intersection, paradeInfoList, simulationDate);
+        all_intersection = input_all.getMap();
+        paradeInfoList = input_all.getParadeList();
+        simulationDate = input_all.getDate();
+        System.out.println(simulationDate);
     }
     
 }

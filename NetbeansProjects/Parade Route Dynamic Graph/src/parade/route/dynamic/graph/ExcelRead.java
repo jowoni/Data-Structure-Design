@@ -5,6 +5,7 @@
  */
 package parade.route.dynamic.graph;
 
+import java.time.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -24,9 +25,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  * @author Michael
  */
-public class ExcelRead {
+    public class ExcelRead {
+    
+    private Map<String, ParadeInfo> returnParadeList;
+    private Map<String, ArrayList<Edge>> returnMap;
+    private LocalDate returnDate;
 
-    ExcelRead(Map<String, ArrayList<Edge>> inputMap, Map<String, ParadeInfo> inputParadeList) throws FileNotFoundException, IOException {
+    ExcelRead(Map<String, ArrayList<Edge>> inputMap, Map<String, ParadeInfo> inputParadeList, LocalDate simulationDate) throws FileNotFoundException, IOException {
 
         FileInputStream fis = new FileInputStream("Input All Data Template.xlsx");
         // HSSFWorkbook은 엑셀파일 전체 내용을 담고 있는 객체
@@ -62,19 +67,39 @@ public class ExcelRead {
         // 탐색에 사용할 Sheet, Row, Cell 객체
         XSSFWorkbook workbook1 = new XSSFWorkbook(fis2);
 
-        int numPeople, paradeTime;
+        int paradeLength;
+        LocalTime paradeStartTime, paradeEndTime;
         String paradeRoute;
 
+        simulationDate = LocalDate.of(Integer.parseInt(workbook1.getSheetAt(0).getRow(3).getCell(1).getStringCellValue().substring(0, 4)),
+                Integer.parseInt(workbook1.getSheetAt(0).getRow(3).getCell(1).getStringCellValue().substring(5, 7)),
+                Integer.parseInt(workbook1.getSheetAt(0).getRow(3).getCell(1).getStringCellValue().substring(8, 10)));
         for (int j = 5; j <= 10; j++) {
             keyName = workbook1.getSheetAt(0).getRow(j).getCell(1).getStringCellValue();
-            numPeople = (int) workbook1.getSheetAt(0).getRow(j).getCell(2).getNumericCellValue();
-            paradeTime = (Integer.parseInt(workbook1.getSheetAt(0).getRow(j).getCell(3).getStringCellValue().substring(0, 2))
-                    - Integer.parseInt(workbook1.getSheetAt(0).getRow(j).getCell(3).getStringCellValue().substring(6, 8))) * 60
-                    + Integer.parseInt(workbook1.getSheetAt(0).getRow(j).getCell(3).getStringCellValue().substring(3, 5))
-                    - Integer.parseInt(workbook1.getSheetAt(0).getRow(j).getCell(3).getStringCellValue().substring(9, 11));
+            paradeLength = (int) workbook1.getSheetAt(0).getRow(j).getCell(2).getNumericCellValue();
+            paradeStartTime = LocalTime.of(Integer.parseInt(workbook1.getSheetAt(0).getRow(j).getCell(3).getStringCellValue().substring(0, 2)),
+                    Integer.parseInt(workbook1.getSheetAt(0).getRow(j).getCell(3).getStringCellValue().substring(3, 5)));
+            paradeEndTime = LocalTime.of(Integer.parseInt(workbook1.getSheetAt(0).getRow(j).getCell(3).getStringCellValue().substring(6, 8)),
+                    Integer.parseInt(workbook1.getSheetAt(0).getRow(j).getCell(3).getStringCellValue().substring(9, 11)));
             paradeRoute = workbook1.getSheetAt(0).getRow(j).getCell(4).getStringCellValue();
-            inputParadeList.put(keyName, new ParadeInfo(numPeople, paradeTime));
+            inputParadeList.put(keyName, new ParadeInfo(paradeLength, paradeStartTime, paradeEndTime));
             inputParadeList.get(keyName).getParadeRoute().addAll(Arrays.asList(paradeRoute.split("→")));
         }
+        
+        returnParadeList = inputParadeList;
+        returnMap = inputMap;
+        returnDate = simulationDate;
+    }
+    
+    Map<String, ParadeInfo> getParadeList(){
+        return returnParadeList;
+    }
+    
+    Map<String, ArrayList<Edge>> getMap(){
+        return returnMap;
+    }
+    
+    LocalDate getDate(){
+        return returnDate;
     }
 }

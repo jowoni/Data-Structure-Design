@@ -5,6 +5,7 @@
  */
 package parade.route.dynamic.graph;
 
+import java.time.*;
 import java.util.LinkedList;
 
 /**
@@ -13,13 +14,17 @@ import java.util.LinkedList;
  */
 public class ParadeInfo {
 
-    int numParticipants;
-    int paradeTime;
+    int length;
+    LocalTime startTime, endTIme;
+    Duration totalTime;
     LinkedList<String> paradeRoute;
 
-    ParadeInfo(int numParticipants, int paradeTime) {
-        this.numParticipants = numParticipants;
-        this.paradeTime = paradeTime;
+    ParadeInfo(int length, LocalTime startTime, LocalTime endTIme) {
+        
+        this.length = length;
+        this.startTime = startTime;
+        this.endTIme = endTIme;
+        this.totalTime = Duration.between(startTime, endTIme);
         paradeRoute = new LinkedList<>();
     }
 
