@@ -38,9 +38,9 @@ public class ParadeRoute_DynamicGraph extends Application {
      * @throws java.lang.Exception
      */
     public static void main(String[] args) throws Exception {
-        View v = new View();
-        Controller c = new Controller(v);
-        ExcelRead input_all = new ExcelRead(all_intersection, paradeInfoList);
+        //View v = new View();
+        //Controller c = new Controller(v);
+        //ExcelRead input_all = new ExcelRead(all_intersection, paradeInfoList);
     }
     
 }

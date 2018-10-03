@@ -3,13 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Michael/Documents/GitHub/Data-Structure-Design/Netbeans%20Project%20File/Dynamic%20Graph_Demonstration%20Parade%20Route/src/parade/route_dynamic/graph/ParadeRoute_DynamicGraph.java</file>
-            <file>file:/C:/Users/Michael/Documents/GitHub/Data-Structure-Design/Netbeans%20Project%20File/Dynamic%20Graph_Demonstration%20Parade%20Route/src/parade/route_dynamic/graph/ExcelRead.java</file>
-            <file>file:/C:/Users/Michael/Documents/GitHub/Data-Structure-Design/Netbeans%20Project%20File/Dynamic%20Graph_Demonstration%20Parade%20Route/src/parade/route_dynamic/graph/ParadeInfo.java</file>
-            <file>file:/C:/Users/Michael/Documents/GitHub/Data-Structure-Design/Netbeans%20Project%20File/Dynamic%20Graph_Demonstration%20Parade%20Route/src/parade/route_dynamic/graph/Edge.java</file>
-            <file>file:/C:/Users/Michael/Documents/GitHub/Data-Structure-Design/Netbeans%20Project%20File/Dynamic%20Graph_Demonstration%20Parade%20Route/src/parade/route_dynamic/graph/Controller.java</file>
-            <file>file:/C:/Users/Michael/Documents/GitHub/Data-Structure-Design/Netbeans%20Project%20File/Dynamic%20Graph_Demonstration%20Parade%20Route/src/parade/route_dynamic/graph/View.java</file>
-            <file>file:/C:/Users/Michael/Documents/GitHub/Data-Structure-Design/Netbeans%20Project%20File/Dynamic%20Graph_Demonstration%20Parade%20Route/src/parade/route_dynamic/graph/FXMLDocumentController.java</file>
+            <file>file:/C:/Users/Michael/Documents/GitHub/Data-Structure-Design/Netbeans%20Project%20File/ParadeRoute_DynamicGraph/src/parade/route_dynamic/graph/ParadeRoute_DynamicGraph.java</file>
+            <file>file:/C:/Users/Michael/Documents/GitHub/Data-Structure-Design/Netbeans%20Project%20File/ParadeRoute_DynamicGraph/src/parade/route_dynamic/graph/Controller.java</file>
+            <file>file:/C:/Users/Michael/Documents/GitHub/Data-Structure-Design/Netbeans%20Project%20File/ParadeRoute_DynamicGraph/src/parade/route_dynamic/graph/FXMLDocumentController.java</file>
+            <file>file:/C:/Users/Michael/Documents/GitHub/Data-Structure-Design/Netbeans%20Project%20File/ParadeRoute_DynamicGraph/src/parade/route_dynamic/graph/ExcelRead.java</file>
         </group>
     </open-files>
 </project-private>
