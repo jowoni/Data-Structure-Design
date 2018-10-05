@@ -19,23 +19,23 @@
         <tabs>
           <Tab text="Parade Route">
                <content>
-                  <SplitPane dividerPositions="0.5" prefHeight="679.0" prefWidth="1118.0">
+                  <SplitPane dividerPositions="0.77421875" prefHeight="679.0" prefWidth="1118.0">
                      <items>
                         <ImageView fitHeight="756.0" fitWidth="987.0">
                            <image>
                               <Image url="@../../../../Background%20Map.png" />
                            </image>
                         </ImageView>
-                        <AnchorPane prefHeight="771.0" prefWidth="432.0">
+                        <AnchorPane prefHeight="761.0" prefWidth="351.0">
                            <children>
                               <Label layoutX="26.0" layoutY="23.0" prefHeight="35.0" prefWidth="50.0" text="Time :" />
-                              <TextArea layoutX="76.0" layoutY="23.0" prefHeight="35.0" prefWidth="182.0" />
-                              <Button layoutX="23.0" layoutY="88.0" mnemonicParsing="false" text="Pause" />
-                              <Button layoutX="104.0" layoutY="88.0" mnemonicParsing="false" text="Play" />
-                              <Button layoutX="183.0" layoutY="88.0" mnemonicParsing="false" text="Reset" />
-                              <Button layoutX="23.0" layoutY="131.0" mnemonicParsing="false" text="Backward" />
-                              <Button layoutX="104.0" layoutY="131.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="70.0" text="Forward" />
-                              <Button layoutX="183.0" layoutY="131.0" mnemonicParsing="false" text="Boost" />
+                              <TextArea fx:id="currentTIme" layoutX="76.0" layoutY="23.0" prefHeight="35.0" prefWidth="182.0" />
+                              <Button layoutX="14.0" layoutY="88.0" mnemonicParsing="false" text="Pause" />
+                              <Button fx:id="play" layoutX="84.0" layoutY="88.0" mnemonicParsing="false" onAction="#onPlayClicked" text="Play" />
+                              <Button layoutX="141.0" layoutY="88.0" mnemonicParsing="false" text="Reset" />
+                              <Button layoutX="14.0" layoutY="131.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="90.0" text="Backward" />
+                              <Button layoutX="116.0" layoutY="131.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="80.0" text="Forward" />
+                              <Button layoutX="209.0" layoutY="88.0" mnemonicParsing="false" text="Boost" />
                               <Label layoutX="85.0" layoutY="170.0" prefHeight="37.0" prefWidth="122.0" text="Time Control Slide" />
                               <Separator layoutX="43.0" layoutY="234.0" prefWidth="200.0" />
                               <ProgressBar layoutX="43.0" layoutY="272.0" prefWidth="200.0" progress="0.0" />

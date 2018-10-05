@@ -34,6 +34,7 @@ public class ParadeRouteDynamicGraph extends Application {
     private static Map<String, ArrayList<Edge>> all_intersection;
     private static Map<String, ParadeInfo> paradeInfoList;
     private static LocalDate simulationDate;
+    private static LocalTime initialStartTime;
     
     public static void main(String[] args) throws Exception {
         launch(args);
@@ -46,7 +47,19 @@ public class ParadeRouteDynamicGraph extends Application {
         all_intersection = input_all.getMap();
         paradeInfoList = input_all.getParadeList();
         simulationDate = input_all.getDate();
-        System.out.println(simulationDate);
+        
+        LocalTime tempTime = null;
+        for( String key : paradeInfoList.keySet() ){
+            if(tempTime == null){
+                tempTime = paradeInfoList.get(key).startTime;
+            }
+            else if(tempTime.isAfter(paradeInfoList.get(key).startTime)){
+                tempTime = paradeInfoList.get(key).startTime;
+            }
+        }
+        initialStartTime = tempTime;
+        //initialStartTime = paradeInfoList.
+        System.out.println(tempTime);
     }
     
 }

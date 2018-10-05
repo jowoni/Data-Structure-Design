@@ -10,7 +10,8 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 
 /**
  *
@@ -18,9 +19,28 @@ import javafx.scene.control.Label;
  */
 public class FXMLDocumentController implements Initializable {
     
+    @FXML
+    private TextArea currentTime;
+    
+    @FXML
+    private Button play;
+    
+    @FXML
+    private AnchorPane ui;
+    
+    @FXML
+    private Button pause;
+    
+    @FXML
+    public void onPlayClicked(ActionEvent event){
+        //currentTime.setText("shiet");
+        currentTime.setEditable(false);
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        /*pause.setOnMouseClicked( event -> { 
+            currentTime.setText("wdwdwd");
+        });*/
     }    
-    
 }
