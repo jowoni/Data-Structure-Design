@@ -27,11 +27,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
     public class ExcelRead {
     
-    private Map<String, ParadeInfo> returnParadeList;
-    private Map<String, ArrayList<Edge>> returnMap;
-    private LocalDate returnDate;
+    private final Map<String, ParadeInfo> returnParadeList;
+    private final Map<String, ArrayList<Edge>> returnMap;
+    private final LocalDate returnDate;
+    private final LocalTime returnTime;
 
-    ExcelRead(Map<String, ArrayList<Edge>> inputMap, Map<String, ParadeInfo> inputParadeList, LocalDate simulationDate) throws FileNotFoundException, IOException {
+    ExcelRead(Map<String, ArrayList<Edge>> wholeMap, Map<String, ParadeInfo> routeMap, LocalDate simulationDate, LocalTime initialTime) throws FileNotFoundException, IOException {
 
         FileInputStream fis = new FileInputStream("Input All Data Template.xlsx");
         // HSSFWorkbook은 엑셀파일 전체 내용을 담고 있는 객체
@@ -53,10 +54,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
             weight = (int) workbook.getSheetAt(0).getRow(i).getCell(3).getNumericCellValue();
 
             if (prevKeyName != null && prevKeyName.equals(keyName)) {
-                inputMap.get(keyName).add(new Edge(keyName, destNode, weight));
+                wholeMap.get(keyName).add(new Edge(keyName, destNode, weight));
             } else {
-                inputMap.put(keyName, new ArrayList<Edge>());
-                inputMap.get(keyName).add(new Edge(keyName, destNode, weight));
+                wholeMap.put(keyName, new ArrayList<>());
+                wholeMap.get(keyName).add(new Edge(keyName, destNode, weight));
             }
             prevKeyName = keyName;
         }
@@ -82,13 +83,25 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
             paradeEndTime = LocalTime.of(Integer.parseInt(workbook1.getSheetAt(0).getRow(j).getCell(3).getStringCellValue().substring(6, 8)),
                     Integer.parseInt(workbook1.getSheetAt(0).getRow(j).getCell(3).getStringCellValue().substring(9, 11)));
             paradeRoute = workbook1.getSheetAt(0).getRow(j).getCell(4).getStringCellValue();
-            inputParadeList.put(keyName, new ParadeInfo(paradeLength, paradeStartTime, paradeEndTime));
-            inputParadeList.get(keyName).getParadeRoute().addAll(Arrays.asList(paradeRoute.split("→")));
+            routeMap.put(keyName, new ParadeInfo(paradeLength, paradeStartTime, paradeEndTime));
+            routeMap.get(keyName).getParadeRoute().addAll(Arrays.asList(paradeRoute.split("→")));
         }
         
-        returnParadeList = inputParadeList;
-        returnMap = inputMap;
+        LocalTime tempTime = null;
+        for( String key : routeMap.keySet() ){
+            if(tempTime == null){
+                tempTime = routeMap.get(key).startTime;
+            }
+            else if(tempTime.isAfter(routeMap.get(key).startTime)){
+                tempTime = routeMap.get(key).startTime;
+            }
+        }
+        initialTime = tempTime;
+        
+        returnParadeList = routeMap;
+        returnMap = wholeMap;
         returnDate = simulationDate;
+        returnTime = initialTime;
     }
     
     Map<String, ParadeInfo> getParadeList(){
@@ -101,5 +114,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
     
     LocalDate getDate(){
         return returnDate;
+    }
+    
+    LocalTime getTime(){
+        return returnTime;
     }
 }

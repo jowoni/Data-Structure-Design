@@ -13,7 +13,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="parade.route.dynamic.graph.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="parade.route.dynamic.graph.ViewController">
    <children>
       <TabPane prefHeight="800.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -29,7 +29,6 @@
                         <AnchorPane prefHeight="761.0" prefWidth="351.0">
                            <children>
                               <Label layoutX="26.0" layoutY="23.0" prefHeight="35.0" prefWidth="50.0" text="Time :" />
-                              <TextArea fx:id="currentTIme" layoutX="76.0" layoutY="23.0" prefHeight="35.0" prefWidth="182.0" />
                               <Button layoutX="14.0" layoutY="88.0" mnemonicParsing="false" text="Pause" />
                               <Button fx:id="play" layoutX="84.0" layoutY="88.0" mnemonicParsing="false" onAction="#onPlayClicked" text="Play" />
                               <Button layoutX="141.0" layoutY="88.0" mnemonicParsing="false" text="Reset" />
@@ -43,6 +42,7 @@
                               <Label layoutX="74.0" layoutY="248.0" text="Overall Parade Progress" />
                               <TextArea layoutX="14.0" layoutY="462.0" prefHeight="295.0" prefWidth="258.0" />
                               <TextArea layoutX="14.0" layoutY="313.0" prefHeight="130.0" prefWidth="259.0" />
+                              <Label fx:id="currentTime" layoutX="77.0" layoutY="29.0" prefHeight="24.0" prefWidth="159.0" />
                            </children>
                         </AnchorPane>
                      </items>

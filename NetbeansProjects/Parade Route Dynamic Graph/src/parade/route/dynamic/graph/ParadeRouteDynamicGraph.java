@@ -5,11 +5,14 @@
  */
 package parade.route.dynamic.graph;
 
+import java.io.IOException;
 import java.time.*;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashMap; 
 import java.util.Map;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,6 +24,9 @@ import javafx.stage.Stage;
  */
 public class ParadeRouteDynamicGraph extends Application {
     
+    public static ViewController vc;
+    public static ExcelRead input_all;
+    
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
@@ -31,35 +37,14 @@ public class ParadeRouteDynamicGraph extends Application {
         stage.show();
     }
     
-    private static Map<String, ArrayList<Edge>> all_intersection;
-    private static Map<String, ParadeInfo> paradeInfoList;
-    private static LocalDate simulationDate;
-    private static LocalTime initialStartTime;
-    
     public static void main(String[] args) throws Exception {
         launch(args);
-        all_intersection = new HashMap<String, ArrayList<Edge>>();
-        paradeInfoList = new HashMap<String, ParadeInfo>();
-        
-        //View v = new View();
-        //Controller c = new Controller(v);
-        ExcelRead input_all = new ExcelRead(all_intersection, paradeInfoList, simulationDate);
-        all_intersection = input_all.getMap();
-        paradeInfoList = input_all.getParadeList();
-        simulationDate = input_all.getDate();
-        
-        LocalTime tempTime = null;
-        for( String key : paradeInfoList.keySet() ){
-            if(tempTime == null){
-                tempTime = paradeInfoList.get(key).startTime;
-            }
-            else if(tempTime.isAfter(paradeInfoList.get(key).startTime)){
-                tempTime = paradeInfoList.get(key).startTime;
-            }
-        }
-        initialStartTime = tempTime;
-        //initialStartTime = paradeInfoList.
-        System.out.println(tempTime);
+        vc = new ViewController();
+        input_all = new ExcelRead(vc.getWholeGraph(), vc.getRouteGraph(), vc.getSimulationDate(), vc.getInitialTime());
+        vc.setWholeGraph(input_all.getMap());
+        vc.setRouteGraph(input_all.getParadeList());
+        vc.setSimulationDate(input_all.getDate());
+        vc.setInitialTime(input_all.getTime());
     }
     
 }
