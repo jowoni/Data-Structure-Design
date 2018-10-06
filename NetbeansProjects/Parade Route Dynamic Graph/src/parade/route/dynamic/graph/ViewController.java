@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +24,10 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import static parade.route.dynamic.graph.ParadeRouteDynamicGraph.vc;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import javafx.application.Platform;
 
 /**
  *
@@ -33,6 +39,16 @@ public class ViewController implements Initializable {
     private static Map<String, ParadeInfo> routeGraph = new HashMap<>();
     private static LocalDate simulationDate = null;
     private static LocalTime initialTime = null;
+    private long timeProgress;
+    /*
+    ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+    TimerTask shit = new TimerTask() {
+        @Override
+        public void run() {
+            vc.setInitialTime(vc.getInitialTime().plusMinutes(10));
+            currentTime.setText(vc.getInitialTime().toString());
+        }
+    };*/
     
     // Local Variable Getter & Setter Methods
     Map<String, ArrayList<Edge>> getWholeGraph(){
@@ -61,7 +77,7 @@ public class ViewController implements Initializable {
     }
     
     @FXML
-    private Label currentTime;
+     Label currentTime;
     
     @FXML
     private Button play;
@@ -69,14 +85,36 @@ public class ViewController implements Initializable {
     @FXML
     private Button pause;
     
+    void runging(){
+        new java.util.Timer().schedule( 
+        new java.util.TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    vc.setInitialTime(vc.getInitialTime().plusMinutes(10));
+                    currentTime.setText(vc.getInitialTime().toString());
+            });
+            }
+        }, 
+        500 
+);
+    }
+    
     @FXML
-    public void onPlayClicked(ActionEvent event){
-        //currentTime.setText(vc.getInitialTime().toString());
-        System.out.println(vc.getInitialTime().toString());
+    public void onPlayClicked(ActionEvent event) throws InterruptedException{
+        //service.scheduleAtFixedRate(shit, 0, 1, TimeUnit.SECONDS);
+        timeProgress = System.currentTimeMillis(); 
+        runging();
+    }
+    
+    @FXML
+    public void onBoostClicked(ActionEvent event){
+        currentTime.setText(vc.getInitialTime().toString());
+        vc.timeProgress = System.currentTimeMillis();
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        currentTime.setText(vc.getInitialTime().toString());
     }  
 }

@@ -10,6 +10,10 @@ import java.time.*;
 import java.util.ArrayList;
 import java.util.HashMap; 
 import java.util.Map;
+import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,13 +42,13 @@ public class ParadeRouteDynamicGraph extends Application {
     }
     
     public static void main(String[] args) throws Exception {
-        launch(args);
         vc = new ViewController();
         input_all = new ExcelRead(vc.getWholeGraph(), vc.getRouteGraph(), vc.getSimulationDate(), vc.getInitialTime());
         vc.setWholeGraph(input_all.getMap());
         vc.setRouteGraph(input_all.getParadeList());
         vc.setSimulationDate(input_all.getDate());
         vc.setInitialTime(input_all.getTime());
+        
+        launch(args);
     }
-    
 }
