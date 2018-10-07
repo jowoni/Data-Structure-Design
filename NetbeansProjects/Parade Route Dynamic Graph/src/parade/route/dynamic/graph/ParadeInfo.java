@@ -6,6 +6,7 @@
 package parade.route.dynamic.graph;
 
 import java.time.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -14,22 +15,64 @@ import java.util.LinkedList;
  */
 public class ParadeInfo {
 
-    int length;
-    LocalTime startTime, endTIme;
-    Duration totalTime;
-    LinkedList<String> paradeRoute;
+    private boolean inProgress;
+    private final int paradeLength;
+    private int routeLength;
+    private float progressLength;
+    private final LocalTime startTime, endTime;
+    private final Duration totalTime;
+    private final ArrayList<String> paradeRoute;
+    private float paradeSpeed;
+    private String currentHead;
+    private String currentTail;
 
-    ParadeInfo(int length, LocalTime startTime, LocalTime endTIme) {
-        
-        this.length = length;
+    ParadeInfo(int paradeLength, LocalTime startTime, LocalTime endTime) {
+        this.paradeLength = paradeLength;
         this.startTime = startTime;
-        this.endTIme = endTIme;
-        this.totalTime = Duration.between(startTime, endTIme);
-        paradeRoute = new LinkedList<>();
+        this.endTime = endTime;
+        this.totalTime = Duration.between(startTime, endTime);
+        inProgress = false;
+        paradeRoute = new ArrayList<>();
+                //(Total route length+ Parade length)meter / Parade time(minute)
     }
-
-    LinkedList<String> getParadeRoute() {
+    
+    boolean getInProgress(){
+        return inProgress;
+    }
+    float getParadeSpeed(){
+        return paradeSpeed;
+    }
+    int getParadeLength(){
+        return paradeLength;
+    }
+    int getRouteLength(){
+        return routeLength;
+    }
+    float getProgressLength(){
+        return progressLength;
+    }
+    LocalTime getStartTime(){
+        return startTime;
+    }
+    LocalTime getEndTime(){
+        return endTime;
+    }
+    Duration getTotalTime(){
+        return totalTime;
+    }
+    ArrayList<String> getParadeRoute(){
         return paradeRoute;
     }
-
+    void setInProgress(boolean inProgress){
+        this.inProgress = inProgress;
+    }
+    void setRouteLength(float routeLength){
+        this.routeLength = (int)routeLength;
+    }
+    void setProgressLength(float progressLength){
+        this.progressLength = progressLength;
+    }
+    void setParadeSpeed(float paradeSpeed){
+        this.paradeSpeed = paradeSpeed;
+    }
 }

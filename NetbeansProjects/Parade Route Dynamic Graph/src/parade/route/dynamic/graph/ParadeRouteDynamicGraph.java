@@ -43,9 +43,9 @@ public class ParadeRouteDynamicGraph extends Application {
     
     public static void main(String[] args) throws Exception {
         vc = new ViewController();
-        input_all = new ExcelRead(vc.getWholeGraph(), vc.getRouteGraph(), vc.getSimulationDate(), vc.getInitialTime());
+        input_all = new ExcelRead(vc.getWholeGraph(), vc.getParadeInfoMap(), vc.getSimulationDate(), vc.getInitialTime());
         vc.setWholeGraph(input_all.getMap());
-        vc.setRouteGraph(input_all.getParadeList());
+        vc.setParadeInfoMap(input_all.getParadeList());
         vc.setSimulationDate(input_all.getDate());
         vc.setInitialTime(input_all.getTime());
         

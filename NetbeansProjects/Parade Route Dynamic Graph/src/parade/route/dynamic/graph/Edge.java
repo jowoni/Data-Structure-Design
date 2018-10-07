@@ -11,13 +11,11 @@ package parade.route.dynamic.graph;
  */
 public class Edge 
 {
-    private final String srcNode;
     private final String destNode;
     private final float weight;
     
-    Edge(String srcNode_, String destNode_, float weight_){
-        srcNode = srcNode_;
-        destNode = destNode_;
-        weight = weight_;
+    Edge(String destNode, float weight){
+        this.destNode = destNode;
+        this.weight = weight;
     }
 }
