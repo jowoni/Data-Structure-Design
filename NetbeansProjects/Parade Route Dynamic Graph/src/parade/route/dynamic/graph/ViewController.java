@@ -101,7 +101,6 @@ public class ViewController implements Initializable {
     }
     
     void calcActiveEdges(){
-        
     }
     
     @FXML
