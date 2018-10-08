@@ -18,13 +18,12 @@ public class ParadeInfo {
     private boolean inProgress;
     private final int paradeLength;
     private int routeLength;
-    private float progressLength;
+    private float headDistance, tailDistance;
+    private String headName, tailName;
     private final LocalTime startTime, endTime;
     private final Duration totalTime;
     private final ArrayList<String> paradeRoute;
     private float paradeSpeed;
-    private String currentHead;
-    private String currentTail;
 
     ParadeInfo(int paradeLength, LocalTime startTime, LocalTime endTime) {
         this.paradeLength = paradeLength;
@@ -48,8 +47,17 @@ public class ParadeInfo {
     int getRouteLength(){
         return routeLength;
     }
-    float getProgressLength(){
-        return progressLength;
+    float getHeadDistance(){
+        return headDistance;
+    }
+    float getTailDistance(){
+        return tailDistance;
+    }
+    String getHeadName(){
+        return headName;
+    }
+    String getTailName(){
+        return tailName;
     }
     LocalTime getStartTime(){
         return startTime;
@@ -69,8 +77,17 @@ public class ParadeInfo {
     void setRouteLength(float routeLength){
         this.routeLength = (int)routeLength;
     }
-    void setProgressLength(float progressLength){
-        this.progressLength = progressLength;
+    void setHeadDistance(float headDistance){
+        this.headDistance = headDistance;
+    }
+    void setTailDistance(float tailDistance){
+        this.tailDistance = tailDistance;
+    }
+    void setHeadName(String headName){
+        this.headName = headName;
+    }
+    void setTailName(String tailName){
+        this.tailName = tailName;
     }
     void setParadeSpeed(float paradeSpeed){
         this.paradeSpeed = paradeSpeed;
