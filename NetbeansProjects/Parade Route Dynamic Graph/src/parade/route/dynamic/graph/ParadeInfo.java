@@ -7,34 +7,35 @@ package parade.route.dynamic.graph;
 
 import java.time.*;
 import java.util.ArrayList;
-import java.util.LinkedList;
-
 /**
  *
  * @author Michael
  */
 public class ParadeInfo {
 
-    private boolean inProgress;
-    private final int paradeLength;
-    private int routeLength;
-    private float headDistance, tailDistance;
-    private String headName, tailName;
-    private final LocalTime startTime, endTime;
-    private final Duration totalTime;
-    private final ArrayList<String> paradeRoute;
-    private float paradeSpeed;
+    private boolean inProgress;                  //행진의 진행여부를 나타냄
+    private final int paradeLength;              //행진의 길이(인원수)
+    private int routeLength;                     //행진 경로의 총길이
+    private float headDistance, tailDistance;    //Head, Tail까지의 거리
+    private String headName, tailName;           //Head, Tail 해당 교차로
+    private final LocalTime startTime, endTime;  //행진 시작, 종료 시간
+    private final Duration totalTime;            //총 행진 시간
+    private final ArrayList<String> paradeRoute; //행진 경로의 ArrayList<String>
+    private float paradeSpeed;                   //행진 진행 속도
 
     ParadeInfo(int paradeLength, LocalTime startTime, LocalTime endTime) {
         this.paradeLength = paradeLength;
         this.startTime = startTime;
         this.endTime = endTime;
         this.totalTime = Duration.between(startTime, endTime);
+        tailName = null;
+        headName = null;
         inProgress = false;
         paradeRoute = new ArrayList<>();
                 //(Total route length+ Parade length)meter / Parade time(minute)
     }
     
+    // 게터 세터
     boolean getInProgress(){
         return inProgress;
     }

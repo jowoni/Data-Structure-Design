@@ -12,13 +12,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Map;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 //import org.apache.poi.hssf.usermodel.XSSFCellStyle;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -34,6 +30,7 @@ public class ExcelRead {
     private final LocalDate returnDate;
     private final LocalTime returnTime;
 
+    //생성자안에 파일 입출력. 프로그램 완성되면 세분화 예정.
     ExcelRead(Map<String, Map<String,Integer>> wholeMap, Map<String, ParadeInfo> routeMap, LocalDate simulationDate, LocalTime initialTime) throws FileNotFoundException, IOException {
 
         FileInputStream fis = new FileInputStream("Input All Data Template.xlsx");
@@ -73,6 +70,7 @@ public class ExcelRead {
         // 탐색에 사용할 Sheet, Row, Cell 객체
         XSSFWorkbook workbook1 = new XSSFWorkbook(fis2);
 
+        //파일 입력받기. 행진길이(인원수), 시작시간, 끝나는시간, 경로 받아오기.
         int paradeLength;
         LocalTime paradeStartTime, paradeEndTime;
         String paradeRouteText, keyName;
