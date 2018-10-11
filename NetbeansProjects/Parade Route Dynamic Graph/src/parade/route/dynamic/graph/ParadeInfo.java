@@ -7,6 +7,7 @@ package parade.route.dynamic.graph;
 
 import java.time.*;
 import java.util.ArrayList;
+import javafx.scene.paint.Color;
 /**
  *
  * @author Michael
@@ -22,6 +23,7 @@ public class ParadeInfo {
     private final Duration totalTime;            //총 행진 시간
     private final ArrayList<String> paradeRoute; //행진 경로의 ArrayList<String>
     private float paradeSpeed;                   //행진 진행 속도
+    private final Color circleColor;
 
     ParadeInfo(int paradeLength, LocalTime startTime, LocalTime endTime) {
         this.paradeLength = paradeLength;
@@ -31,8 +33,16 @@ public class ParadeInfo {
         tailName = null;
         headName = null;
         inProgress = false;
-        paradeRoute = new ArrayList<>();
-                //(Total route length+ Parade length)meter / Parade time(minute)
+        paradeRoute = new ArrayList<>(); 
+        circleColor = Color.color(Math.random(), Math.random(), Math.random());
+    }
+    
+    void resetValues(){
+        inProgress = false;
+        headName = null;
+        tailName = null;
+        headDistance = 0;
+        tailDistance = 0;
     }
     
     // 게터 세터
@@ -71,6 +81,9 @@ public class ParadeInfo {
     }
     ArrayList<String> getParadeRoute(){
         return paradeRoute;
+    }
+    Color getCircleColor(){
+        return circleColor;
     }
     void setInProgress(boolean inProgress){
         this.inProgress = inProgress;

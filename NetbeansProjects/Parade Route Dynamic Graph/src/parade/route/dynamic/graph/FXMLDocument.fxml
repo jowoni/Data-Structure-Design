@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.SplitPane?>
@@ -10,815 +12,102 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="parade.route.dynamic.graph.ViewController">
    <children>
       <SplitPane dividerPositions="0.77421875" prefHeight="800.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane fx:id="map" prefHeight="200.0" prefWidth="200.0">
                <children>
                   <ImageView fitHeight="756.0" fitWidth="987.0">
                      <image>
                         <Image url="@../../../../Background%20Map.png" />
                      </image>
                   </ImageView>
-                  <StackPane layoutX="407.0" layoutY="335.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="세종" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="세종" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="456.0" layoutY="196.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="동십자" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="동십자" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="358.0" layoutY="240.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="정부청사" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="6.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="정부청사" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="360.0" layoutY="268.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="청사별관" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="6.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="청사별관" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="317.0" layoutY="302.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="동원" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="동원" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="363.0" layoutY="302.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="세문관뒤" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="6.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="세문관뒤" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="455.0" layoutY="335.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="서린" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="서린" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="453.0" layoutY="364.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="모전교" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="모전교" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="407.0" layoutY="362.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="청계광장" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="6.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="청계광장" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="366.0" layoutY="335.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="포시즌" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="포시즌" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="406.0" layoutY="276.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="세문관" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="세문관" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="526.0" layoutY="371.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="광교" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="광교" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="527.0" layoutY="337.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="종로1" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="종로1" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="317.0" layoutY="337.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="금호" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="금호" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="245.0" layoutY="382.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="정동" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="정동" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="353.0" layoutY="361.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="덕수초" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="덕수초" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="330.0" layoutY="455.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="덕수궁" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="덕수궁" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="529.0" layoutY="292.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="공평" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="공평" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="529.0" layoutY="209.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="안국" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="안국" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="522.0" layoutY="437.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="을지1" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="을지1" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="626.0" layoutY="472.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="명동성당" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="6.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="명동성당" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="626.0" layoutY="439.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="을지2" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="을지2" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="626.0" layoutY="385.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="청계2" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="청계2" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="626.0" layoutY="335.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="종로2" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="종로2" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="593.0" layoutY="269.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="인사동" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="인사동" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="626.0" layoutY="279.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="낙원상가" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="6.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="낙원상가" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="468.0" layoutY="98.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="박물관" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="박물관" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="573.0" layoutY="117.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="제동초" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="재동초" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="593.0" layoutY="178.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="안국역" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="안국역" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="676.0" layoutY="165.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="창덕궁" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="창덕궁" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="703.0" layoutY="279.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="문화거리" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="6.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="문화거리" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="716.0" layoutY="332.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="종로3" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="종로3" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="719.0" layoutY="382.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="청계3" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="청계3" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="729.0" layoutY="475.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="명보" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="명보" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="726.0" layoutY="432.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="을지3" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="을지3" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="739.0" layoutY="555.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="퇴계3" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="퇴계3" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="653.0" layoutY="555.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="퇴계2" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="퇴계2" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="443.0" layoutY="465.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="환구단" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="환구단" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="245.0" layoutY="199.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="사직공원" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="6.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="사직공원" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="67.0" layoutY="289.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="독립문" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="독립문" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="143.0" layoutY="375.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="영천시장" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="197.0" layoutY="439.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="서대문" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="서대문" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="413.0" layoutY="455.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="대한문" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="대한문" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="406.0" layoutY="485.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="태평" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="태평" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="489.0" layoutY="532.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="한국은행" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="6.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="한국은행" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="509.0" layoutY="579.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="퇴계1" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="퇴계1" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="380.0" layoutY="568.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="남대문" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="남대문" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="393.0" layoutY="644.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="남산육교" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="6.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="남신육교" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="258.0" layoutY="535.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="의주" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="의주" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="291.0" layoutY="592.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="염천" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="염천" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="317.0" layoutY="663.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="서울역" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="서울역" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="400.0" layoutY="209.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="광화문" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="광화문" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="317.0" layoutY="199.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="내자" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="내자" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="353.0" layoutY="199.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="적선" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="적선" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="291.0" layoutY="111.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="통의" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="통의" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="284.0" layoutY="65.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="옥인" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="옥인" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="271.0" layoutY="8.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="신교" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="신교" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="317.0" layoutY="240.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="서울청" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="서울청" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="440.0" layoutY="279.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="미대사관" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="6.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="미대사관" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="443.0" layoutY="240.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="열린마당" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="6.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="열린마당" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="451.0" layoutY="432.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="개풍" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="개풍" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="509.0" layoutY="488.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="눈스퀘어" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="6.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="눈스퀘어" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="459.0" layoutY="495.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="소공" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="소공" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="476.0" layoutY="282.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="꽃집" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="꽃집" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <Line endX="103.0" endY="39.0" layoutX="143.0" layoutY="178.0" startX="-50.0" startY="120.0" />
-                  <Line endX="50.0" endY="254.0" layoutX="153.0" layoutY="188.0" startX="-65.0" startY="124.0" />
-                  <Line endX="98.0" endY="220.0" layoutX="153.0" layoutY="188.0" startX="66.0" startY="253.0" />
-                  <Line endX="118.0" endY="24.0" layoutX="153.0" layoutY="188.0" startX="164.0" startY="24.0" />
-                  <Line endX="202.0" endY="23.0" layoutX="153.0" layoutY="188.0" startX="189.0" startY="23.0" />
-                  <Line endX="147.0" endY="-99.0" layoutX="153.0" layoutY="188.0" startX="153.0" startY="-74.0" />
-                  <Line endX="177.0" endY="14.0" layoutX="153.0" layoutY="188.0" startX="155.0" startY="-53.0" />
-                  <Line endX="134.0" endY="-157.0" layoutX="153.0" layoutY="188.0" startX="143.0" startY="-119.0" />
-                  <Line endX="250.0" endY="32.0" layoutX="153.0" layoutY="188.0" startX="226.0" startY="25.0" />
-                  <Line endX="306.0" endY="24.0" layoutX="153.0" layoutY="188.0" startX="273.0" startY="32.0" />
-                  <Line endX="327.0" endY="-66.0" layoutX="153.0" layoutY="188.0" startX="320.0" startY="9.0" />
-                  <Line endX="421.0" endY="-58.0" layoutX="153.0" layoutY="188.0" startX="339.0" startY="-73.0" />
-                  <Line endX="436.0" endY="-46.0" layoutX="153.0" layoutY="188.0" startX="451.0" startY="-9.0" />
-                  <Line endX="444.0" endY="10.0" layoutX="153.0" layoutY="188.0" startX="401.0" startY="30.0" />
-                  <Line endX="378.0" endY="31.0" layoutX="153.0" layoutY="188.0" startX="329.0" startY="24.0" />
-                  <Line endX="525.0" endY="-12.0" layoutX="153.0" layoutY="188.0" startX="465.0" startY="-4.0" />
-                  <Line endX="178.0" endY="36.0" layoutX="153.0" layoutY="188.0" startX="178.0" startY="53.0" />
-                  <Line endX="178.0" endY="77.0" layoutX="153.0" layoutY="188.0" startX="178.0" startY="115.0" />
-                  <Line endX="177.0" endY="139.0" layoutX="153.0" layoutY="188.0" startX="177.0" startY="151.0" />
-                  <Line endX="133.0" endY="187.0" layoutX="153.0" layoutY="188.0" startX="117.0" startY="202.0" />
-                  <Line endX="207.0" endY="68.0" layoutX="153.0" layoutY="188.0" startX="190.0" startY="68.0" />
-                  <Line endX="262.0" endY="47.0" layoutX="153.0" layoutY="188.0" startX="262.0" startY="91.0" />
-                  <Line endX="253.0" endY="100.0" layoutX="153.0" layoutY="188.0" startX="234.0" startY="94.0" />
-                  <Line endX="214.0" endY="38.0" layoutX="153.0" layoutY="188.0" startX="214.0" startY="54.0" />
-                  <Line endX="220.0" endY="76.0" layoutX="153.0" layoutY="188.0" startX="220.0" startY="80.0" />
-                  <Line endX="222.0" endY="104.0" layoutX="153.0" layoutY="188.0" startX="222.0" startY="116.0" />
-                  <Line endX="212.0" endY="128.0" layoutX="153.0" layoutY="188.0" startX="190.0" startY="128.0" />
-                  <Line endX="225.0" endY="149.0" layoutX="153.0" layoutY="188.0" startX="225.0" startY="139.0" />
-                  <Line endX="214.0" endY="161.0" layoutX="153.0" layoutY="188.0" startX="191.0" startY="161.0" />
-                  <Line endX="254.0" endY="161.0" layoutX="153.0" layoutY="188.0" startX="240.0" startY="161.0" />
-                  <Line endX="312.0" endY="34.0" layoutX="153.0" layoutY="188.0" startX="303.0" startY="53.0" />
-                  <Line endX="291.0" endY="69.0" layoutX="163.0" layoutY="198.0" startX="291.0" startY="83.0" />
-                  <Line endX="278.0" endY="95.0" layoutX="163.0" layoutY="198.0" startX="269.0" startY="95.0" />
-                  <Line endX="315.0" endY="97.0" layoutX="163.0" layoutY="198.0" startX="302.0" startY="97.0" />
-                  <Line endX="366.0" endY="28.0" layoutX="163.0" layoutY="198.0" startX="305.0" startY="53.0" />
-                  <Line endX="292.0" endY="151.0" layoutX="163.0" layoutY="198.0" startX="271.0" startY="151.0" />
-                  <Line endX="255.0" endY="104.0" layoutX="163.0" layoutY="198.0" startX="255.0" startY="139.0" />
-                  <Line endX="223.0" endY="112.0" layoutX="163.0" layoutY="198.0" startX="249.0" startY="101.0" />
-                  <Line endX="248.0" endY="142.0" layoutX="163.0" layoutY="198.0" startX="225.0" startY="122.0" />
-                  <Line endX="239.0" endY="32.0" layoutX="163.0" layoutY="198.0" startX="217.0" startY="48.0" />
-                  <Line endX="246.0" endY="82.0" layoutX="163.0" layoutY="198.0" startX="220.0" startY="61.0" />
-                  <Line endX="281.0" endY="50.0" layoutX="163.0" layoutY="198.0" startX="261.0" startY="32.0" />
-                  <Line endX="256.0" endY="165.0" layoutX="163.0" layoutY="198.0" startX="256.0" startY="159.0" />
-                  <Line endX="243.0" endY="178.0" layoutX="163.0" layoutY="198.0" startX="217.0" startY="178.0" />
-                  <Line endX="215.0" endY="171.0" layoutX="163.0" layoutY="198.0" startX="216.0" startY="163.0" />
-                  <Line endX="298.0" endY="139.0" layoutX="163.0" layoutY="198.0" startX="290.0" startY="106.0" />
-                  <Line endX="321.0" endY="109.0" layoutX="163.0" layoutY="198.0" startX="311.0" startY="139.0" />
-                  <Line endX="316.0" endY="87.0" layoutX="163.0" layoutY="198.0" startX="302.0" startY="66.0" />
-                  <Line endX="378.0" endY="37.0" layoutX="163.0" layoutY="198.0" startX="378.0" startY="95.0" />
-                  <Line endX="367.0" endY="105.0" layoutX="163.0" layoutY="198.0" startX="340.0" startY="98.0" />
-                  <Line endX="365.0" endY="153.0" layoutX="163.0" layoutY="198.0" startX="319.0" startY="153.0" />
-                  <Line endX="378.0" endY="118.0" layoutX="163.0" layoutY="198.0" startX="378.0" startY="141.0" />
-                  <Line endX="283.0" endY="104.0" layoutX="163.0" layoutY="198.0" startX="267.0" startY="139.0" />
-                  <Line endX="154.0" endY="53.0" layoutX="163.0" layoutY="198.0" startX="100.0" startY="27.0" />
-                  <Line endX="154.0" endY="157.0" layoutX="163.0" layoutY="198.0" startX="141.0" startY="165.0" />
-                  <Line endX="198.0" endY="188.0" layoutX="163.0" layoutY="198.0" startX="186.0" startY="257.0" />
-                  <Line endX="171.0" endY="265.0" layoutX="163.0" layoutY="198.0" startX="105.0" startY="208.0" />
-                  <Line endX="178.0" endY="159.0" layoutX="163.0" layoutY="198.0" startX="192.0" startY="168.0" />
-                  <Line endX="289.0" endY="180.0" layoutX="163.0" layoutY="198.0" startX="270.0" startY="180.0" />
-                  <Line endX="305.0" endY="161.0" layoutX="163.0" layoutY="198.0" startX="305.0" startY="169.0" />
-                  <Line endX="376.0" endY="164.0" layoutX="163.0" layoutY="198.0" startX="376.0" startY="175.0" />
-                  <Line endX="361.0" endY="185.0" layoutX="163.0" layoutY="198.0" startX="315.0" startY="179.0" />
-                  <Line endX="449.0" endY="5.0" layoutX="163.0" layoutY="198.0" startX="479.0" startY="81.0" />
-                  <Line endX="432.0" endY="92.0" layoutX="163.0" layoutY="198.0" startX="393.0" startY="105.0" />
-                  <Line endX="463.0" endY="152.0" layoutX="163.0" layoutY="198.0" startX="390.0" startY="152.0" />
-                  <Line endX="455.0" endY="87.0" layoutX="163.0" layoutY="198.0" startX="466.0" startY="93.0" />
-                  <Line endX="541.0" endY="95.0" layoutX="163.0" layoutY="198.0" startX="488.0" startY="95.0" />
-                  <Line endX="528.0" endY="-6.0" layoutX="163.0" layoutY="198.0" startX="551.0" startY="82.0" />
-                  <Line endX="476.0" endY="107.0" layoutX="163.0" layoutY="198.0" startX="476.0" startY="136.0" />
-                  <Line endX="557.0" endY="106.0" layoutX="163.0" layoutY="198.0" startX="564.0" startY="136.0" />
-                  <Line endX="554.0" endY="149.0" layoutX="163.0" layoutY="198.0" startX="490.0" startY="149.0" />
-                  <Line endX="567.0" endY="159.0" layoutX="163.0" layoutY="198.0" startX="567.0" startY="187.0" />
-                  <Line endX="476.0" endY="162.0" layoutX="163.0" layoutY="198.0" startX="476.0" startY="189.0" />
-                  <Line endX="464.0" endY="199.0" layoutX="163.0" layoutY="198.0" startX="389.0" startY="186.0" />
-                  <Line endX="555.0" endY="198.0" layoutX="163.0" layoutY="198.0" startX="488.0" startY="198.0" />
-                  <Line endX="571.0" endY="210.0" layoutX="163.0" layoutY="198.0" startX="571.0" startY="236.0" />
-                  <Line endX="474.0" endY="212.0" layoutX="163.0" layoutY="198.0" startX="474.0" startY="243.0" />
-                  <Line endX="561.0" endY="248.0" layoutX="163.0" layoutY="198.0" startX="489.0" startY="254.0" />
-                  <Line endX="465.0" endY="254.0" layoutX="163.0" layoutY="198.0" startX="385.0" startY="254.0" />
-                  <Line endX="375.0" endY="198.0" layoutX="163.0" layoutY="198.0" startX="375.0" startY="241.0" />
-                  <Line endX="283.0" endY="298.0" layoutX="186.0" layoutY="199.0" startX="276.0" startY="288.0" />
-                  <Line endX="475.0" endY="266.0" layoutX="163.0" layoutY="198.0" startX="475.0" startY="277.0" />
-                  <Line endX="577.0" endY="259.0" layoutX="163.0" layoutY="198.0" startX="577.0" startY="279.0" />
-                  <Line endX="580.0" endY="302.0" layoutX="163.0" layoutY="198.0" startX="589.0" startY="359.0" />
-                  <Line endX="578.0" endY="372.0" layoutX="163.0" layoutY="198.0" startX="515.0" startY="372.0" />
-                  <Line endX="481.0" endY="300.0" layoutX="163.0" layoutY="198.0" startX="502.0" startY="359.0" />
-                  <Line endX="490.0" endY="372.0" layoutX="163.0" layoutY="198.0" startX="371.0" startY="387.0" />
-                  <Line endX="331.0" endY="342.0" layoutX="163.0" layoutY="198.0" startX="316.0" startY="321.0" />
-                  <Line endX="258.0" endY="190.0" layoutX="163.0" layoutY="198.0" startX="258.0" startY="259.0" />
-                  <Line endX="304.0" endY="192.0" layoutX="163.0" layoutY="198.0" startX="304.0" startY="235.0" />
-                  <Line endX="348.0" endY="243.0" layoutX="173.0" layoutY="208.0" startX="304.0" startY="237.0" />
-                  <Line endX="255.0" endY="233.0" layoutX="207.0" layoutY="224.0" startX="255.0" startY="243.0" />
-                  <Line endX="263.0" endY="264.0" layoutX="173.0" layoutY="208.0" startX="272.0" startY="264.0" />
-                  <Line endX="250.0" endY="270.0" layoutX="173.0" layoutY="208.0" startX="250.0" startY="279.0" />
-                  <Line endX="242.0" endY="301.0" layoutX="173.0" layoutY="208.0" startX="223.0" startY="362.0" />
-                  <Line endX="111.0" endY="335.0" layoutX="173.0" layoutY="208.0" startX="235.0" startY="292.0" />
-                  <Line endX="45.0" endY="254.0" layoutX="173.0" layoutY="208.0" startX="93.0" startY="331.0" />
-                  <Line endX="105.0" endY="351.0" layoutX="173.0" layoutY="208.0" startX="125.0" startY="387.0" />
-                  <Line endX="144.0" endY="397.0" layoutX="173.0" layoutY="208.0" startX="209.0" startY="379.0" />
-                  <Line endX="213.0" endY="383.0" layoutX="173.0" layoutY="208.0" startX="163.0" startY="457.0" />
-                  <Line endX="221.0" endY="385.0" layoutX="173.0" layoutY="208.0" startX="230.0" startY="438.0" />
-                  <Line endX="150.0" endY="459.0" layoutX="173.0" layoutY="208.0" startX="136.0" startY="409.0" />
-                  <Line endX="221.0" endY="452.0" layoutX="173.0" layoutY="208.0" startX="170.0" startY="468.0" />
-                  <Line endX="336.0" endY="390.0" layoutX="173.0" layoutY="208.0" startX="245.0" startY="443.0" />
-                  <Line endX="319.0" endY="347.0" layoutX="173.0" layoutY="208.0" startX="234.0" startY="372.0" />
-                  <Line endX="358.0" endY="134.0" layoutX="173.0" layoutY="208.0" startX="322.0" startY="98.0" />
-                  <Line endX="183.0" endY="262.0" layoutX="173.0" layoutY="208.0" startX="242.0" startY="262.0" />
-                  <Line endX="163.0" endY="16.0" layoutX="173.0" layoutY="208.0" startX="196.0" startY="94.0" />
-                  <Line endX="169.0" endY="11.0" layoutX="173.0" layoutY="208.0" startX="188.0" startY="38.0" />
-                  <Line endX="179.0" endY="269.0" layoutX="173.0" layoutY="208.0" startX="235.0" startY="285.0" />
-                  <Line endX="433.0" endY="-3.0" layoutX="173.0" layoutY="208.0" startX="433.0" startY="62.0" />
-                  <Line endX="379.0" endY="22.0" layoutX="173.0" layoutY="208.0" startX="424.0" startY="66.0" />
-                  <Line endX="337.0" endY="295.0" layoutX="183.0" layoutY="218.0" startX="327.0" startY="319.0" />
-                  <Line endX="352.0" endY="244.0" layoutX="183.0" layoutY="218.0" startX="344.0" startY="274.0" />
-                  <Line endX="326.0" endY="285.0" layoutX="183.0" layoutY="218.0" startX="302.0" startY="285.0" />
-                  <Line endX="547.0" endY="269.0" layoutX="183.0" layoutY="218.0" startX="469.0" startY="269.0" />
-                  <Line endX="286.0" endY="298.0" layoutX="173.0" layoutY="208.0" startX="259.0" startY="291.0" />
-                  <StackPane layoutX="279.0" layoutY="355.0" prefHeight="0.0" prefWidth="0.0">
-                     <children>
-                        <Label text="경희궁" textAlignment="CENTER">
-                           <font>
-                              <Font name="Arial Bold" size="8.0" />
-                           </font>
-                        </Label>
-                        <Circle fx:id="경희궁" fill="#e8e3e3" opacity="0.7" radius="13.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
-                     </children>
-                  </StackPane>
-                  <Line endX="191.0" endY="176.0" layoutX="163.0" layoutY="198.0" startX="142.0" startY="176.0" />
-                  <Line endX="360.0" endY="23.0" layoutX="173.0" layoutY="208.0" startX="325.0" startY="77.0" />
-                  <Line endX="345.0" endY="372.0" layoutX="173.0" layoutY="208.0" startX="335.0" startY="349.0" />
-                  <Line endX="155.0" endY="46.0" layoutX="183.0" layoutY="218.0" startX="183.0" startY="91.0" />
-                  <Line endX="258.0" endY="76.0" layoutX="173.0" layoutY="208.0" startX="273.0" startY="54.0" />
-                  <Line endX="440.0" endY="86.0" layoutX="173.0" layoutY="208.0" startX="458.0" startY="131.0" />
+                  <Circle fx:id="세종" fill="#e8e3e3" layoutX="420.0" layoutY="348.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="동십자" fill="#e8e3e3" layoutX="471.0" layoutY="212.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="정부청사" fill="#e8e3e3" layoutX="371.0" layoutY="253.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="청사별관" fill="#e8e3e3" layoutX="374.0" layoutY="282.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="동원" fill="#e8e3e3" layoutX="329.0" layoutY="315.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="세문관뒤" fill="#e8e3e3" layoutX="378.0" layoutY="315.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="서린" fill="#e8e3e3" layoutX="468.0" layoutY="348.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="모전교" fill="#e8e3e3" layoutX="468.0" layoutY="380.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="청계광장" fill="#e8e3e3" layoutX="420.0" layoutY="380.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="포시즌" fill="#e8e3e3" layoutX="379.0" layoutY="348.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="세문관" fill="#e8e3e3" layoutX="419.0" layoutY="282.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="광교" fill="#e8e3e3" layoutX="539.0" layoutY="385.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="종로1" fill="#e8e3e3" layoutX="542.0" layoutY="348.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="금호" fill="#e8e3e3" layoutX="330.0" layoutY="349.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="정동" fill="#e8e3e3" layoutX="258.0" layoutY="395.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="덕수초" fill="#e8e3e3" layoutX="365.0" layoutY="375.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="덕수궁" fill="#e8e3e3" layoutX="343.0" layoutY="468.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="공평" fill="#e8e3e3" layoutX="542.0" layoutY="302.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="안국" fill="#e8e3e3" layoutX="539.0" layoutY="222.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="을지1" fill="#e8e3e3" layoutX="535.0" layoutY="451.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="명동성당" fill="#e8e3e3" layoutX="639.0" layoutY="488.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="을지2" fill="#e8e3e3" layoutX="636.0" layoutY="449.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="청계2" fill="#e8e3e3" layoutX="636.0" layoutY="398.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="종로2" fill="#e8e3e3" layoutX="639.0" layoutY="348.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="인사동" fill="#e8e3e3" layoutX="606.0" layoutY="282.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="낙원상가" fill="#e8e3e3" layoutX="639.0" layoutY="292.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="박물관" fill="#e8e3e3" layoutX="481.0" layoutY="111.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="재동초" fill="#e8e3e3" layoutX="584.0" layoutY="127.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="안국역" fill="#e8e3e3" layoutX="606.0" layoutY="191.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="창덕궁" fill="#e8e3e3" layoutX="690.0" layoutY="178.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="문화거리" fill="#e8e3e3" layoutX="716.0" layoutY="289.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="종로3" fill="#e8e3e3" layoutX="728.0" layoutY="346.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="청계3" fill="#e8e3e3" layoutX="733.0" layoutY="395.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="명보" fill="#e8e3e3" layoutX="743.0" layoutY="492.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="을지3" fill="#e8e3e3" layoutX="738.0" layoutY="445.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="퇴계3" fill="#e8e3e3" layoutX="751.0" layoutY="568.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="퇴계2" fill="#e8e3e3" layoutX="665.0" layoutY="568.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="환구단" fill="#e8e3e3" layoutX="455.0" layoutY="479.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="사직공원" fill="#e8e3e3" layoutX="254.0" layoutY="217.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="독립문" fill="#e8e3e3" layoutX="81.0" layoutY="302.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="서대문" fill="#e8e3e3" layoutX="210.0" layoutY="451.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="대한문" fill="#e8e3e3" layoutX="423.0" layoutY="474.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="태평" fill="#e8e3e3" layoutX="418.0" layoutY="505.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="한국은행" fill="#e8e3e3" layoutX="506.0" layoutY="547.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="퇴계1" fill="#e8e3e3" layoutX="522.0" layoutY="588.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="남대문" fill="#e8e3e3" layoutX="387.0" layoutY="588.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="남산육교" fill="#e8e3e3" layoutX="405.0" layoutY="657.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="의주" fill="#e8e3e3" layoutX="271.0" layoutY="547.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="염천" fill="#e8e3e3" layoutX="306.0" layoutY="604.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="서울역" fill="#e8e3e3" layoutX="329.0" layoutY="679.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="광화문" fill="#e8e3e3" layoutX="416.0" layoutY="221.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="내자" fill="#e8e3e3" layoutX="330.0" layoutY="212.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="적선" fill="#e8e3e3" layoutX="366.0" layoutY="212.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="통의" fill="#e8e3e3" layoutX="306.0" layoutY="124.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="옥인" fill="#e8e3e3" layoutX="297.0" layoutY="75.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="신교" fill="#e8e3e3" layoutX="285.0" layoutY="22.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="서울청" fill="#e8e3e3" layoutX="331.0" layoutY="255.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="미대사관" fill="#e8e3e3" layoutX="456.0" layoutY="292.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="열린마당" fill="#e8e3e3" layoutX="460.0" layoutY="250.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="개풍" fill="#e8e3e3" layoutX="467.0" layoutY="449.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="눈스퀘어" fill="#e8e3e3" layoutX="526.0" layoutY="501.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="소공" fill="#e8e3e3" layoutX="472.0" layoutY="505.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="경희궁" fill="#e8e3e3" layoutX="293.0" layoutY="367.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
+                  <Circle fx:id="꽃집" fill="#e8e3e3" layoutX="490.0" layoutY="295.0" radius="11.0" stroke="#6f6f6f" strokeType="INSIDE" strokeWidth="1.5" />
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="761.0" prefWidth="351.0">
                <children>
-                  <Label layoutX="26.0" layoutY="61.0" prefHeight="35.0" prefWidth="50.0" text="Time :">
+                  <Label layoutX="28.0" layoutY="63.0" prefHeight="35.0" prefWidth="50.0" text="Time :">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Button fx:id="play" layoutX="10.0" layoutY="124.0" mnemonicParsing="false" onAction="#onPlayClicked" prefHeight="30.0" prefWidth="60.0" text="Play" />
-                  <Button fx:id="reset" layoutX="78.0" layoutY="124.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" text="Reset" />
-                  <Button fx:id="prev" layoutX="146.0" layoutY="124.0" mnemonicParsing="false" onAction="#onPrevClicked" prefHeight="30.0" prefWidth="60.0" text="Prev" />
-                  <Button fx:id="next" layoutX="213.0" layoutY="124.0" mnemonicParsing="false" onAction="#onNextClicked" prefHeight="30.0" prefWidth="60.0" text="Next" />
-                  <Label layoutX="85.0" layoutY="170.0" prefHeight="37.0" prefWidth="122.0" text="Time Control Slide" />
-                  <Separator layoutX="43.0" layoutY="234.0" prefWidth="200.0" />
-                  <ProgressBar layoutX="43.0" layoutY="272.0" prefWidth="200.0" progress="0.0" />
-                  <Slider layoutX="45.0" layoutY="207.0" prefHeight="14.0" prefWidth="202.0" />
-                  <Label layoutX="74.0" layoutY="248.0" text="Overall Parade Progress" />
-                  <TextArea layoutX="14.0" layoutY="462.0" prefHeight="288.0" prefWidth="258.0" />
-                  <TextArea layoutX="14.0" layoutY="313.0" prefHeight="130.0" prefWidth="259.0" />
-                  <Label fx:id="currentTimeLbl" layoutX="185.0" layoutY="67.0" prefHeight="24.0" prefWidth="62.0">
+                  <Button fx:id="reset" layoutX="31.0" layoutY="111.0" mnemonicParsing="false" onAction="#onResetClicked" prefHeight="46.0" prefWidth="108.0" text="Reset" />
+                  <Button fx:id="next" layoutX="155.0" layoutY="111.0" mnemonicParsing="false" onAction="#onNextClicked" prefHeight="46.0" prefWidth="108.0" text="Next" />
+                  <Label layoutX="85.0" layoutY="168.0" prefHeight="37.0" prefWidth="122.0" text="Time Control Slide" />
+                  <Separator layoutX="14.0" layoutY="229.0" prefHeight="3.0" prefWidth="258.0" />
+                  <ProgressBar fx:id="pb" layoutX="31.0" layoutY="280.0" prefHeight="18.0" prefWidth="221.0" progress="0.0" />
+                  <Slider layoutX="31.0" layoutY="205.0" prefHeight="14.0" prefWidth="221.0" />
+                  <Label layoutX="74.0" layoutY="246.0" text="Overall Parade Progress" />
+                  <TextArea layoutX="15.0" layoutY="374.0" prefHeight="368.0" prefWidth="258.0" />
+                  <Label fx:id="currentTimeLbl" layoutX="182.0" layoutY="68.0" prefHeight="24.0" prefWidth="62.0">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -828,11 +117,14 @@
                         <Font name="Calibri Bold Italic" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="currentDateLbl" layoutX="85.0" layoutY="67.0" prefHeight="24.0" prefWidth="86.0">
+                  <Label fx:id="currentDateLbl" layoutX="81.0" layoutY="68.0" prefHeight="24.0" prefWidth="108.0">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
+                  <ProgressIndicator fx:id="pi" layoutX="216.0" layoutY="240.0" prefHeight="35.0" prefWidth="30.0" progress="0.0" />
+                  <ComboBox fx:id="cb" layoutX="32.0" layoutY="332.0" prefHeight="23.0" prefWidth="221.0" promptText="Choose Parade" />
+                  <Separator layoutX="14.0" layoutY="313.0" prefHeight="3.0" prefWidth="258.0" />
                </children>
             </AnchorPane>
          </items>

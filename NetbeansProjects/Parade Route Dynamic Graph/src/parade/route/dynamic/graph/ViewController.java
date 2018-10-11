@@ -10,16 +10,17 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import static parade.route.dynamic.graph.ParadeRouteDynamicGraph.vc;
+import javafx.scene.layout.AnchorPane;
+import static parade.route.dynamic.graph.ParadeRouteDynamicGraph.input;
 import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.LineBuilder;
 
 /**
  *
@@ -27,12 +28,12 @@ import javafx.scene.paint.Color;
  */
 public class ViewController implements Initializable {
 
-    private static Map<String, Map<String, Integer>> wholeGraph = new HashMap<>(); // 전체 지도
-    private static Map<String, ParadeInfo> paradeInfoMap = new HashMap<>();        // 시위대명별 행진정보
-    private static LocalDate simulationDate = null;
-    private static LocalTime initialTime = null;
+    private static Map<String, Map<String, Integer>> wholeGraph = input.getWholeGraph(); // 전체 지도
+    private static Map<String, ParadeInfo> paradeInfoMap = input.getParadeInfoMap();     // 시위대명별 행진정보
+    private static LocalDate simulationDate = input.getDate();
     private static LocalTime currentTime = null;
-    
+    private static String currentParade;
+
     // Local Variable Getter & Setter Methods
     Map<String, Map<String, Integer>> getWholeGraph() {
         return wholeGraph;
@@ -44,10 +45,6 @@ public class ViewController implements Initializable {
 
     LocalDate getSimulationDate() {
         return simulationDate;
-    }
-
-    LocalTime getInitialTime() {
-        return initialTime;
     }
 
     LocalTime getCurrentTime() {
@@ -69,675 +66,332 @@ public class ViewController implements Initializable {
 
     void setSimulationDate(LocalDate simulationDate) {
         ViewController.simulationDate = simulationDate;
-    }                //
-
-    void setInitialTime(LocalTime initialTime) {
-        ViewController.initialTime = initialTime;
-    }                       //
+    }                //            
 
     void nextTime() {
-        vc.getInitialTime().plusMinutes(10);
+        getInitialTime().plusMinutes(10);
         currentTimeLbl.setText(getInitialTime().toString());
     }
 
     void checkInProgressParades() {
         ArrayList tempParadeRoute;
-        for (String key : vc.getParadeInfoMap().keySet()) { //행진정보별
-            if ((vc.getParadeInfoMap().get(key).getStartTime().equals(vc.getCurrentTime()) || vc.getParadeInfoMap().get(key).getStartTime().isBefore(vc.getCurrentTime()))
-                    && (vc.getParadeInfoMap().get(key).getEndTime().equals(vc.getCurrentTime()) || vc.getParadeInfoMap().get(key).getEndTime().isAfter(vc.getCurrentTime()))) {
+        for (String key : getParadeInfoMap().keySet()) { //행진정보별
+            if ((getParadeInfoMap().get(key).getStartTime().equals(getCurrentTime()) || getParadeInfoMap().get(key).getStartTime().isBefore(getCurrentTime()))
+                    && (getParadeInfoMap().get(key).getEndTime().equals(getCurrentTime()) || getParadeInfoMap().get(key).getEndTime().isAfter(getCurrentTime()))) {
                 //StarTime <= currentTime <= EndTime 일 경우
-                vc.getParadeInfoMap().get(key).setInProgress(true);
-            } else {
-                vc.getParadeInfoMap().get(key).setInProgress(false);
-                
-                //행진 안하는 행진 경로상의 노드들 회색으로 칠하기.
-                tempParadeRoute = vc.getParadeInfoMap().get(key).getParadeRoute();
-                for(int i = 0; i < tempParadeRoute.size() - 1; i++){
-                    if (tempParadeRoute.get(i).equals("개풍")) {
-                        개풍.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("경희궁")) {
-                        경희궁.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("공평")) {
-                        공평.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("광교")) {
-                        광교.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("광화문")) {
-                        광화문.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("금호")) {
-                        금호.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("꽃집")) {
-                        꽃집.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("낙원상가")) {
-                        낙원상가.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("남대문")) {
-                        남대문.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("남신육교")) {
-                        남신육교.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("내자")) {
-                        내자.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("눈스퀘어")) {
-                        눈스퀘어.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("대한문")) {
-                        대한문.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("덕수궁")) {
-                        덕수궁.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("덕수초")) {
-                        덕수초.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("독립문")) {
-                        독립문.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("동십자")) {
-                        동십자.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("동원")) {
-                        동원.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("명동성당")) {
-                        명동성당.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("명보")) {
-                        명보.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("모전교")) {
-                        모전교.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("문화거리")) {
-                        문화거리.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("미대사관")) {
-                        미대사관.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("박물관")) {
-                        박물관.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("사직공원")) {
-                        사직공원.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("서대문")) {
-                        서대문.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("서린")) {
-                        서린.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("서울역")) {
-                        서울역.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("서울청")) {
-                        서울청.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("세문관")) {
-                        세문관.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("세문관뒤")) {
-                        세문관뒤.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("세종")) {
-                        세종.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("소공")) {
-                        소공.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("신교")) {
-                        신교.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("안국")) {
-                        안국.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("안국역")) {
-                        안국역.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("열린마당")) {
-                        열린마당.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("염천")) {
-                        염천.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("옥인")) {
-                        옥인.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("을지1")) {
-                        을지1.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("을지2")) {
-                        을지2.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("을지3")) {
-                        을지3.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("의주")) {
-                        의주.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("인사동")) {
-                        인사동.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("재동초")) {
-                        재동초.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("적선")) {
-                        적선.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("정동")) {
-                        정동.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("정부청사")) {
-                        정부청사.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("종로1")) {
-                        종로1.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("종로2")) {
-                        종로2.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("종로3")) {
-                        종로3.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("창덕궁")) {
-                        창덕궁.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("청계2")) {
-                        청계2.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("청계3")) {
-                        청계3.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("청계광장")) {
-                        청계광장.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("청사별관")) {
-                        청사별관.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("태평")) {
-                        태평.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("통의")) {
-                        통의.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("퇴계1")) {
-                        퇴계1.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("퇴계2")) {
-                        퇴계2.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("퇴계3")) {
-                        퇴계3.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("포시즌")) {
-                        포시즌.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("한국은행")) {
-                        한국은행.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("환구단")) {
-                        환구단.setFill(Color.rgb(232, 227, 227));
-                    }
-                }
+                getParadeInfoMap().get(key).setInProgress(true);
+            } else { //행진 안하는 행진 경로상의 노드들 회색으로 칠하기.
+                getParadeInfoMap().get(key).setInProgress(false);
+                resetAllNodeColor();
             }
         }
     }   // 현재 진행중인 행진 확인
 
+    void resetAllNodeColor() {
+        ArrayList tempParadeRoute;
+        for (String key : getParadeInfoMap().keySet()) { //행진정보별
+            tempParadeRoute = getParadeInfoMap().get(key).getParadeRoute();
+            for (int i = 0; i < tempParadeRoute.size() - 1; i++) {
+                inputStringReturnCircle(tempParadeRoute.get(i).toString()).setFill(Color.rgb(232, 227, 227));
+            }
+        }
+    } //모든 노드 기본 회색으로 칠하기
+
     void calcHeadDistanceAndName() {
         int accDistance;
         ArrayList tempParadeRoute;
-        //for (String key : vc.getParadeInfoMap().keySet()) { //행진정보별
-        String key = "태극기국민평의회";
-        if (vc.getParadeInfoMap().get(key).getStartTime().isBefore(vc.getCurrentTime())) { //현재시간이 행진시작시간 이후일 때만
-            vc.getParadeInfoMap().get(key).setHeadDistance( //Head 까지의 거리 계산
-                    vc.getParadeInfoMap().get(key).getStartTime().until(vc.getCurrentTime(), ChronoUnit.MINUTES)
-                    * vc.getParadeInfoMap().get(key).getParadeSpeed()
-            ); //System.out.println(vc.getParadeInfoMap().get(key).getHeadDistance()); 
-            accDistance = 0;
-            tempParadeRoute = vc.getParadeInfoMap().get(key).getParadeRoute(); //행진정보별 행진경로ArrayList
-            if (vc.getParadeInfoMap().get(key).getHeadDistance() <= vc.getParadeInfoMap().get(key).getRouteLength()) { //행진 Head가 경로 안에 있을때
-                for (int i = 0; i < tempParadeRoute.size() - 1; i++) {               //행진정보별 행진경로ArrayList 순환
-                    accDistance += vc.getWholeGraph().get(tempParadeRoute.get(i)).get(tempParadeRoute.get(i + 1));
-                    if (i == 0 && accDistance >= vc.getParadeInfoMap().get(key).getHeadDistance()) { //Head가 방금 출발해서 처음 노드 도달도 못한 경우(Head와 첫번째 노드가 같은 경우도 포함)
-                        vc.getParadeInfoMap().get(key).setHeadName(tempParadeRoute.get(i + 1).toString());
-                        //System.out.println(accDistance);
-                        break;
-                    } else if (accDistance < vc.getParadeInfoMap().get(key).getHeadDistance() && vc.getParadeInfoMap().get(key).getHeadDistance() < accDistance + vc.getWholeGraph().get(tempParadeRoute.get(i + 1)).get(tempParadeRoute.get(i + 2))) {
-                        //Head거리가 accDistance, accDistance(Next)사이일때         이건 필요없을듯?! i+2이 행진경로 ArrayList 사이즈 이하일때(마지막 노드일 경우 발생)
-                        vc.getParadeInfoMap().get(key).setHeadName(tempParadeRoute.get(i + 2).toString());
-                        //System.out.println(accDistance);
-                        break;
+        for (String key : getParadeInfoMap().keySet()) { //행진정보별
+            if (getParadeInfoMap().get(key).getStartTime().isBefore(getCurrentTime())
+                    && ((getParadeInfoMap().get(key).getEndTime()).equals(getCurrentTime()) || (getParadeInfoMap().get(key).getEndTime()).isAfter(getCurrentTime()))) { //현재시간이 행진시작시간 이후일 때만
+                getParadeInfoMap().get(key).setHeadDistance( //Head 까지의 거리 계산
+                        getParadeInfoMap().get(key).getStartTime().until(getCurrentTime(), ChronoUnit.MINUTES)
+                        * getParadeInfoMap().get(key).getParadeSpeed());
+                accDistance = 0;
+                tempParadeRoute = getParadeInfoMap().get(key).getParadeRoute(); //행진정보별 행진경로ArrayList
+                if (getParadeInfoMap().get(key).getHeadDistance() <= getParadeInfoMap().get(key).getRouteLength()) { //행진 Head가 경로 안에 있을때
+                    for (int i = 0; i < tempParadeRoute.size() - 1; i++) {               //행진정보별 행진경로ArrayList 순환
+                        accDistance += getWholeGraph().get(tempParadeRoute.get(i)).get(tempParadeRoute.get(i + 1));
+                        if (i == 0 && accDistance >= getParadeInfoMap().get(key).getHeadDistance()) { //Head가 방금 출발해서 처음 노드 도달도 못한 경우(Head와 첫번째 노드가 같은 경우도 포함)
+                            getParadeInfoMap().get(key).setHeadName(tempParadeRoute.get(i + 1).toString());
+                            break;
+                        } else if (accDistance < getParadeInfoMap().get(key).getHeadDistance() && getParadeInfoMap().get(key).getHeadDistance() < accDistance + getWholeGraph().get(tempParadeRoute.get(i + 1)).get(tempParadeRoute.get(i + 2))) {
+                            //Head거리가 accDistance, accDistance(Next)사이일때         
+                            getParadeInfoMap().get(key).setHeadName(tempParadeRoute.get(i + 2).toString());
+                            break;
+                        } else if (accDistance == getParadeInfoMap().get(key).getHeadDistance()) { //Head가 완전히 교차로 위에 있을때
+                            getParadeInfoMap().get(key).setHeadName(tempParadeRoute.get(i + 1).toString());
+                            break;
+                        }
                     }
-                    //else if() Head와 노드가 같은 경우
+                } else { //행진 Head가 경로밖에 있을때
+                    getParadeInfoMap().get(key).setHeadName(getParadeInfoMap().get(key).getParadeRoute().get(getParadeInfoMap().get(key).getParadeRoute().size() - 1));
+                    //행진 HeadName은 행진경로 ArrayList 마지막 노드로 저장
                 }
-            } else { //행진 Head가 경로밖에 있을때
-                vc.getParadeInfoMap().get(key).setHeadName(vc.getParadeInfoMap().get(key).getParadeRoute().get(vc.getParadeInfoMap().get(key).getParadeRoute().size()-1));
-                //행진 HeadName은 행진경로 ArrayList 마지막 노드로 저장
-            }
-        } else if (vc.getParadeInfoMap().get(key).getStartTime().equals(vc.getCurrentTime())) { //행진시작시간이 현재시간과 같을때
-            vc.getParadeInfoMap().get(key).setHeadDistance(0); //Head까지 거리 = 0 그리고 HeadName은 행진경로 첫번째 노드
-            vc.getParadeInfoMap().get(key).setHeadName(vc.getParadeInfoMap().get(key).getParadeRoute().get(0));
-            //         break;
-        } else if ((vc.getParadeInfoMap().get(key).getEndTime()).equals(vc.getCurrentTime())) { //행진종료시간이 현재시간과 같을때
-            vc.getParadeInfoMap().get(key).setHeadDistance(vc.getParadeInfoMap().get(key).getRouteLength());
-            vc.getParadeInfoMap().get(key).setHeadName(vc.getParadeInfoMap().get(key).getParadeRoute().get(vc.getParadeInfoMap().get(key).getParadeRoute().size()-1));
+            } else if (getParadeInfoMap().get(key).getStartTime().equals(getCurrentTime())) { //행진시작시간이 현재시간과 같을때
+                getParadeInfoMap().get(key).setHeadDistance(0); //Head까지 거리 = 0 그리고 HeadName은 행진경로 첫번째 노드
+                getParadeInfoMap().get(key).setHeadName(getParadeInfoMap().get(key).getParadeRoute().get(0));
+                //         break;
+            } else if ((getParadeInfoMap().get(key).getEndTime()).equals(getCurrentTime())) { //행진종료시간이 현재시간과 같을때
+                getParadeInfoMap().get(key).setHeadDistance(getParadeInfoMap().get(key).getRouteLength());
+                getParadeInfoMap().get(key).setHeadName(getParadeInfoMap().get(key).getParadeRoute().get(getParadeInfoMap().get(key).getParadeRoute().size() - 1));
 
-        } else if ((vc.getParadeInfoMap().get(key).getEndTime()).isBefore(vc.getCurrentTime())) { //현재시간이 행진종료시간 후일때(행진이 종료)
-            //해당 행진의 모든것을 null로 되돌려버리는 알고리즘.
-            vc.getParadeInfoMap().get(key).setHeadName(null);
-            vc.getParadeInfoMap().get(key).setHeadDistance(0);
+            } else if ((getParadeInfoMap().get(key).getEndTime()).isBefore(getCurrentTime())) { //현재시간이 행진종료시간 후일때(행진이 종료)
+                //해당 행진의 모든것을 null로 되돌려버리는 알고리즘.
+                getParadeInfoMap().get(key).setHeadName(null);
+                getParadeInfoMap().get(key).setHeadDistance(0);
+            }
         }
-        //}
-        //System.out.println(vc.getParadeInfoMap().get(key).getHeadName()); 
     }   // 행진의 Head의 Distance와 Head 교차로 계산
 
     void calcTailDistanceAndName() {
         int accDistance;
         ArrayList tempParadeRoute;
-        String key = "태극기국민평의회";
-        //for (String key : vc.getParadeInfoMap().keySet()) { //행진정보별
-        if (vc.getParadeInfoMap().get(key).getStartTime().isBefore(vc.getCurrentTime()) //현재시간이 행진시작시간 이후이고 Tail(Head - 행진길이) >= 0 일때
-                && vc.getParadeInfoMap().get(key).getHeadDistance() - vc.getParadeInfoMap().get(key).getParadeLength() >= 0) {
-            vc.getParadeInfoMap().get(key).setTailDistance(vc.getParadeInfoMap().get(key).getHeadDistance() - vc.getParadeInfoMap().get(key).getParadeLength()); //Tail까지 거리 계산
-            if (vc.getParadeInfoMap().get(key).getTailDistance() == 0) { //Tail까지 거리가 0일때
-                vc.getParadeInfoMap().get(key).setTailName(vc.getParadeInfoMap().get(key).getParadeRoute().get(0)); //행진경로 첫번째 노드를 TailName으로 설정
-            } else if (vc.getParadeInfoMap().get(key).getTailDistance() < vc.getParadeInfoMap().get(key).getRouteLength()) { //Tail이 행진 경로 안에 있을때
-                accDistance = 0;
-                tempParadeRoute = vc.getParadeInfoMap().get(key).getParadeRoute(); //행진정보별 행진경로ArrayList
-                for (int i = 0; i < tempParadeRoute.size() - 1; i++) {             //행진정보별 행진경로ArrayList 순환
-                    accDistance += vc.getWholeGraph().get(tempParadeRoute.get(i)).get(tempParadeRoute.get(i + 1));
-                    if (i == 0 && accDistance >= vc.getParadeInfoMap().get(key).getTailDistance()) { //Tail이 방금 출발해서 처음 노드 도달도 못한 경우 (Tail이 첫번째 노드와 같은 경우도 포함)
-                        vc.getParadeInfoMap().get(key).setTailName(tempParadeRoute.get(i + 1).toString());
-                        //                    break;
-                    } else if (accDistance < vc.getParadeInfoMap().get(key).getTailDistance() && vc.getParadeInfoMap().get(key).getTailDistance() < accDistance + vc.getWholeGraph().get(tempParadeRoute.get(i + 1)).get(tempParadeRoute.get(i + 2))) {
-                        //Tail거리가 accDistance, accDistance(Next)사이일때         이건 필요없을듯?! i+2이 행진경로 ArrayList 사이즈 이하일때(마지막 노드일 경우 발생)
-                        vc.getParadeInfoMap().get(key).setTailName(tempParadeRoute.get(i + 2).toString());
-                        //                    break;
+        for (String key : getParadeInfoMap().keySet()) { //행진정보별
+            if (getParadeInfoMap().get(key).getStartTime().isBefore(getCurrentTime()) //현재시간이 행진시작시간 이후이고 Tail(Head - 행진길이) >= 0 일때
+                    && getParadeInfoMap().get(key).getHeadDistance() - getParadeInfoMap().get(key).getParadeLength() >= 0
+                    && ((getParadeInfoMap().get(key).getEndTime()).isAfter(getCurrentTime())) || (getParadeInfoMap().get(key).getEndTime()).equals(getCurrentTime())) {
+                getParadeInfoMap().get(key).setTailDistance(getParadeInfoMap().get(key).getHeadDistance() - getParadeInfoMap().get(key).getParadeLength()); //Tail까지 거리 계산
+                if (getParadeInfoMap().get(key).getTailDistance() == 0) { //Tail까지 거리가 0일때
+                    getParadeInfoMap().get(key).setTailName(getParadeInfoMap().get(key).getParadeRoute().get(0)); //행진경로 첫번째 노드를 TailName으로 설정
+                } else if (getParadeInfoMap().get(key).getTailDistance() < getParadeInfoMap().get(key).getRouteLength()) { //Tail이 행진 경로 안에 있을때
+                    accDistance = 0;
+                    tempParadeRoute = getParadeInfoMap().get(key).getParadeRoute(); //행진정보별 행진경로ArrayList
+                    for (int i = 0; i < tempParadeRoute.size() - 1; i++) {             //행진정보별 행진경로ArrayList 순환
+                        accDistance += getWholeGraph().get(tempParadeRoute.get(i)).get(tempParadeRoute.get(i + 1));
+                        if (i == 0 && accDistance >= getParadeInfoMap().get(key).getTailDistance()) { //Tail이 방금 출발해서 처음 노드 도달도 못한 경우 (Tail이 첫번째 노드와 같은 경우도 포함)
+                            getParadeInfoMap().get(key).setTailName(tempParadeRoute.get(i).toString());
+                            break;
+                        } else if (accDistance < getParadeInfoMap().get(key).getTailDistance() && getParadeInfoMap().get(key).getTailDistance() < accDistance + getWholeGraph().get(tempParadeRoute.get(i + 1)).get(tempParadeRoute.get(i + 2))) {
+                            //Tail거리가 accDistance, accDistance(Next)사이일때         
+                            getParadeInfoMap().get(key).setTailName(tempParadeRoute.get(i + 1).toString());
+                            break;
+                        } else if (accDistance == getParadeInfoMap().get(key).getTailDistance()) { //Tail이 완전히 교차로 위에 있을때
+                            getParadeInfoMap().get(key).setTailName(tempParadeRoute.get(i + 1).toString());
+                            break;
+                        }
                     }
+                } else { //Tail이 경로밖에 있을때
+                    getParadeInfoMap().get(key).setTailName(getParadeInfoMap().get(key).getParadeRoute().get(getParadeInfoMap().get(key).getParadeRoute().size() - 1));
+                    //TailName은 행진경로 ArrayList 마지막 노드로 저장
                 }
-            } else { //Tail이 경로밖에 있을때
-                vc.getParadeInfoMap().get(key).setTailName(vc.getParadeInfoMap().get(key).getParadeRoute().get(vc.getParadeInfoMap().get(key).getParadeRoute().size()-1));
-                //TailName은 행진경로 ArrayList 마지막 노드로 저장
-            }
-        } else if ((vc.getParadeInfoMap().get(key).getEndTime()).equals(vc.getCurrentTime())) { //행진종료시간이 현재시간과 같을때
-            vc.getParadeInfoMap().get(key).setTailName(vc.getParadeInfoMap().get(key).getParadeRoute().get(vc.getParadeInfoMap().get(key).getParadeRoute().size()-1));
+            } else if ((getParadeInfoMap().get(key).getEndTime()).equals(getCurrentTime())) { //행진종료시간이 현재시간과 같을때
+                getParadeInfoMap().get(key).setTailName(getParadeInfoMap().get(key).getParadeRoute().get(getParadeInfoMap().get(key).getParadeRoute().size() - 1));
 
-        } else if ((vc.getParadeInfoMap().get(key).getEndTime()).isBefore(vc.getCurrentTime())) { //현재시간이 행진종료시간 후일때(행진이 종료)
-            //해당 행진의 모든것을 null로 되돌려버리는 알고리즘.
-            vc.getParadeInfoMap().get(key).setTailName(null);
-            vc.getParadeInfoMap().get(key).setTailDistance(0);
+            } else if ((getParadeInfoMap().get(key).getEndTime()).isBefore(getCurrentTime())) { //현재시간이 행진종료시간 후일때(행진이 종료)
+                //해당 행진의 모든것을 null로 되돌려버리는 알고리즘.
+                getParadeInfoMap().get(key).setTailName(null);
+                getParadeInfoMap().get(key).setTailDistance(0);
+            }
         }
-        //}
     }   // 행진의 Tail의 Distance와 Tail 교차로 계산                       
 
     void paintActivatedNodes() {
         ArrayList tempParadeRoute;
-        //for (String key : vc.getParadeInfoMap().keySet()) { //행진정보별
-        String key = "태극기국민평의회";
-        if (vc.getParadeInfoMap().get(key).getInProgress() == true) { //행진이 현재 진행중일때
-            tempParadeRoute = vc.getParadeInfoMap().get(key).getParadeRoute(); //행진정보별 행진경로ArrayList
-            if (vc.getParadeInfoMap().get(key).getTailName() == null) {
-                for (int i = 0; i <= tempParadeRoute.indexOf(vc.getParadeInfoMap().get(key).getHeadName()); i++) { //Tail이 아직 존재 안하는 경우
-                    //행진이 진행중인 경로의 노드들을 Activate; 
-                    System.out.println(vc.getParadeInfoMap().get(key).getHeadName());
-                    if (tempParadeRoute.get(i).equals("개풍")) {
-                        개풍.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("경희궁")) {
-                        경희궁.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("공평")) {
-                        공평.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("광교")) {
-                        광교.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("광화문")) {
-                        광화문.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("금호")) {
-                        금호.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("꽃집")) {
-                        꽃집.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("낙원상가")) {
-                        낙원상가.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("남대문")) {
-                        남대문.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("남신육교")) {
-                        남신육교.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("내자")) {
-                        내자.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("눈스퀘어")) {
-                        눈스퀘어.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("대한문")) {
-                        대한문.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("덕수궁")) {
-                        덕수궁.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("덕수초")) {
-                        덕수초.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("독립문")) {
-                        독립문.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("동십자")) {
-                        동십자.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("동원")) {
-                        동원.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("명동성당")) {
-                        명동성당.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("명보")) {
-                        명보.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("모전교")) {
-                        모전교.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("문화거리")) {
-                        문화거리.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("미대사관")) {
-                        미대사관.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("박물관")) {
-                        박물관.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("사직공원")) {
-                        사직공원.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("서대문")) {
-                        서대문.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("서린")) {
-                        서린.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("서울역")) {
-                        서울역.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("서울청")) {
-                        서울청.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("세문관")) {
-                        세문관.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("세문관뒤")) {
-                        세문관뒤.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("세종")) {
-                        세종.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("소공")) {
-                        소공.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("신교")) {
-                        신교.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("안국")) {
-                        안국.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("안국역")) {
-                        안국역.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("열린마당")) {
-                        열린마당.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("염천")) {
-                        염천.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("옥인")) {
-                        옥인.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("을지1")) {
-                        을지1.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("을지2")) {
-                        을지2.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("을지3")) {
-                        을지3.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("의주")) {
-                        의주.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("인사동")) {
-                        인사동.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("재동초")) {
-                        재동초.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("적선")) {
-                        적선.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("정동")) {
-                        정동.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("정부청사")) {
-                        정부청사.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("종로1")) {
-                        종로1.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("종로2")) {
-                        종로2.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("종로3")) {
-                        종로3.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("창덕궁")) {
-                        창덕궁.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("청계2")) {
-                        청계2.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("청계3")) {
-                        청계3.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("청계광장")) {
-                        청계광장.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("청사별관")) {
-                        청사별관.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("태평")) {
-                        태평.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("통의")) {
-                        통의.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("퇴계1")) {
-                        퇴계1.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("퇴계2")) {
-                        퇴계2.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("퇴계3")) {
-                        퇴계3.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("포시즌")) {
-                        포시즌.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("한국은행")) {
-                        한국은행.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("환구단")) {
-                        환구단.setFill(Color.AQUA);
+        for (String key : getParadeInfoMap().keySet()) { //행진정보별
+            if (getParadeInfoMap().get(key).getInProgress() == true) { //행진이 현재 진행중일때
+                tempParadeRoute = getParadeInfoMap().get(key).getParadeRoute(); //행진정보별 행진경로ArrayList
+                if (getParadeInfoMap().get(key).getTailName() == null) { // Tail이 아직 존재 안하는 경우
+                    for (int i = 0; i <= tempParadeRoute.indexOf(getParadeInfoMap().get(key).getHeadName()); i++) {
+                        //행진이 진행중인 경로의 노드들을 색칠
+                        inputStringReturnCircle(tempParadeRoute.get(i).toString()).setFill(getParadeInfoMap().get(key).getCircleColor());
                     }
-                }
-            } else {
-                for (int i = tempParadeRoute.indexOf(vc.getParadeInfoMap().get(key).getTailName()); i <= tempParadeRoute.indexOf(vc.getParadeInfoMap().get(key).getHeadName()); i++) {
-                    //행진이 진행중인 경로의 노드들을 Activate; Tail이 존재 하는 경우.
-                    if (tempParadeRoute.get(i).equals("개풍")) {
-                        개풍.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("경희궁")) {
-                        경희궁.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("공평")) {
-                        공평.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("광교")) {
-                        광교.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("광화문")) {
-                        광화문.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("금호")) {
-                        금호.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("꽃집")) {
-                        꽃집.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("낙원상가")) {
-                        낙원상가.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("남대문")) {
-                        남대문.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("남신육교")) {
-                        남신육교.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("내자")) {
-                        내자.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("눈스퀘어")) {
-                        눈스퀘어.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("대한문")) {
-                        대한문.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("덕수궁")) {
-                        덕수궁.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("덕수초")) {
-                        덕수초.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("독립문")) {
-                        독립문.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("동십자")) {
-                        동십자.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("동원")) {
-                        동원.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("명동성당")) {
-                        명동성당.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("명보")) {
-                        명보.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("모전교")) {
-                        모전교.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("문화거리")) {
-                        문화거리.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("미대사관")) {
-                        미대사관.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("박물관")) {
-                        박물관.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("사직공원")) {
-                        사직공원.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("서대문")) {
-                        서대문.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("서린")) {
-                        서린.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("서울역")) {
-                        서울역.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("서울청")) {
-                        서울청.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("세문관")) {
-                        세문관.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("세문관뒤")) {
-                        세문관뒤.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("세종")) {
-                        세종.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("소공")) {
-                        소공.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("신교")) {
-                        신교.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("안국")) {
-                        안국.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("안국역")) {
-                        안국역.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("열린마당")) {
-                        열린마당.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("염천")) {
-                        염천.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("옥인")) {
-                        옥인.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("을지1")) {
-                        을지1.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("을지2")) {
-                        을지2.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("을지3")) {
-                        을지3.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("의주")) {
-                        의주.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("인사동")) {
-                        인사동.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("재동초")) {
-                        재동초.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("적선")) {
-                        적선.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("정동")) {
-                        정동.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("정부청사")) {
-                        정부청사.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("종로1")) {
-                        종로1.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("종로2")) {
-                        종로2.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("종로3")) {
-                        종로3.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("창덕궁")) {
-                        창덕궁.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("청계2")) {
-                        청계2.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("청계3")) {
-                        청계3.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("청계광장")) {
-                        청계광장.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("청사별관")) {
-                        청사별관.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("태평")) {
-                        태평.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("통의")) {
-                        통의.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("퇴계1")) {
-                        퇴계1.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("퇴계2")) {
-                        퇴계2.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("퇴계3")) {
-                        퇴계3.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("포시즌")) {
-                        포시즌.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("한국은행")) {
-                        한국은행.setFill(Color.AQUA);
-                    } else if (tempParadeRoute.get(i).equals("환구단")) {
-                        환구단.setFill(Color.AQUA);
+                } else { // Tail이 존재 하는 경우
+                    for (int i = tempParadeRoute.indexOf(getParadeInfoMap().get(key).getTailName()); i <= tempParadeRoute.indexOf(getParadeInfoMap().get(key).getHeadName()); i++) {
+                        //행진이 진행중인 경로의 노드들을 색칠.
+                        inputStringReturnCircle(tempParadeRoute.get(i).toString()).setFill(getParadeInfoMap().get(key).getCircleColor());
                     }
-                }
-                for (int i = 0; i <= tempParadeRoute.indexOf(vc.getParadeInfoMap().get(key).getTailName()) - 1; i++) { //행진이 지나간 Node들을 Deactivate; Tail이 존재 하는 경우.
-                    if (tempParadeRoute.get(i).equals("개풍")) {
-                        개풍.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("경희궁")) {
-                        경희궁.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("공평")) {
-                        공평.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("광교")) {
-                        광교.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("광화문")) {
-                        광화문.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("금호")) {
-                        금호.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("꽃집")) {
-                        꽃집.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("낙원상가")) {
-                        낙원상가.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("남대문")) {
-                        남대문.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("남신육교")) {
-                        남신육교.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("내자")) {
-                        내자.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("눈스퀘어")) {
-                        눈스퀘어.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("대한문")) {
-                        대한문.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("덕수궁")) {
-                        덕수궁.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("덕수초")) {
-                        덕수초.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("독립문")) {
-                        독립문.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("동십자")) {
-                        동십자.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("동원")) {
-                        동원.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("명동성당")) {
-                        명동성당.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("명보")) {
-                        명보.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("모전교")) {
-                        모전교.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("문화거리")) {
-                        문화거리.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("미대사관")) {
-                        미대사관.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("박물관")) {
-                        박물관.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("사직공원")) {
-                        사직공원.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("서대문")) {
-                        서대문.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("서린")) {
-                        서린.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("서울역")) {
-                        서울역.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("서울청")) {
-                        서울청.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("세문관")) {
-                        세문관.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("세문관뒤")) {
-                        세문관뒤.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("세종")) {
-                        세종.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("소공")) {
-                        소공.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("신교")) {
-                        신교.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("안국")) {
-                        안국.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("안국역")) {
-                        안국역.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("열린마당")) {
-                        열린마당.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("염천")) {
-                        염천.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("옥인")) {
-                        옥인.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("을지1")) {
-                        을지1.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("을지2")) {
-                        을지2.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("을지3")) {
-                        을지3.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("의주")) {
-                        의주.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("인사동")) {
-                        인사동.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("재동초")) {
-                        재동초.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("적선")) {
-                        적선.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("정동")) {
-                        정동.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("정부청사")) {
-                        정부청사.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("종로1")) {
-                        종로1.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("종로2")) {
-                        종로2.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("종로3")) {
-                        종로3.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("창덕궁")) {
-                        창덕궁.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("청계2")) {
-                        청계2.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("청계3")) {
-                        청계3.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("청계광장")) {
-                        청계광장.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("청사별관")) {
-                        청사별관.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("태평")) {
-                        태평.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("통의")) {
-                        통의.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("퇴계1")) {
-                        퇴계1.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("퇴계2")) {
-                        퇴계2.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("퇴계3")) {
-                        퇴계3.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("포시즌")) {
-                        포시즌.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("한국은행")) {
-                        한국은행.setFill(Color.rgb(232, 227, 227));
-                    } else if (tempParadeRoute.get(i).equals("환구단")) {
-                        환구단.setFill(Color.rgb(232, 227, 227));
+                    for (int i = 0; i <= tempParadeRoute.indexOf(getParadeInfoMap().get(key).getTailName()) - 1; i++) {
+                        //행진이 지나간 Node들 색 없애기
+                        inputStringReturnCircle(tempParadeRoute.get(i).toString()).setFill(Color.rgb(232, 227, 227));
                     }
                 }
             }
         }
-        //}
     }       // 현재 행진이 지나가고 있는 노드들 색 변화
 
-    //버튼
-    @FXML
-    private Button play;
-    @FXML
-    private Button prev;
-    @FXML
-    private Button next;
-    @FXML
-    private Button reset;
+    void drawAllEdges() {
+        double x1, y1, x2, y2;
+        for (String key : getWholeGraph().keySet()) {
+            x1 = inputStringReturnCircle(key).getLayoutX();
+            y1 = inputStringReturnCircle(key).getLayoutY();
+            for (String key2 : getWholeGraph().get(key).keySet()) {
+                x2 = inputStringReturnCircle(key2).getLayoutX();
+                y2 = inputStringReturnCircle(key2).getLayoutY();
+                map.getChildren().add(LineBuilder.create()
+                        .startX(x1)
+                        .startY(y1)
+                        .endX(x2)
+                        .endY(y2)
+                        .fill(Color.BLACK)
+                        .strokeWidth(0.5)
+                        .build()
+                );
+            }
+        }
+        for (String key : getWholeGraph().keySet()) {
+            inputStringReturnCircle(key).toFront();
+            x1 = inputStringReturnCircle(key).getLayoutX();
+            y1 = inputStringReturnCircle(key).getLayoutY();
+            map.getChildren().add(LabelBuilder.create().text(key).layoutX(x1).layoutY(y1).build());
+        }
+    }
 
+    Circle inputStringReturnCircle(String inputString) {
+        switch (inputString) {
+            case "개풍":
+                return 개풍;
+            case "경희궁":
+                return 경희궁;
+            case "공평":
+                return 공평;
+            case "광교":
+                return 광교;
+            case "광화문":
+                return 광화문;
+            case "금호":
+                return 금호;
+            case "꽃집":
+                return 꽃집;
+            case "낙원상가":
+                return 낙원상가;
+            case "남대문":
+                return 남대문;
+            case "남산육교":
+                return 남산육교;
+            case "내자":
+                return 내자;
+            case "눈스퀘어":
+                return 눈스퀘어;
+            case "대한문":
+                return 대한문;
+            case "덕수궁":
+                return 덕수궁;
+            case "덕수초":
+                return 덕수초;
+            case "독립문":
+                return 독립문;
+            case "동십자":
+                return 동십자;
+            case "동원":
+                return 동원;
+            case "명동성당":
+                return 명동성당;
+            case "명보":
+                return 명보;
+            case "모전교":
+                return 모전교;
+            case "문화거리":
+                return 문화거리;
+            case "미대사관":
+                return 미대사관;
+            case "박물관":
+                return 박물관;
+            case "사직공원":
+                return 사직공원;
+            case "서대문":
+                return 서대문;
+            case "서린":
+                return 서린;
+            case "서울역":
+                return 서울역;
+            case "서울청":
+                return 서울청;
+            case "세문관":
+                return 세문관;
+            case "세문관뒤":
+                return 세문관뒤;
+            case "세종":
+                return 세종;
+            case "소공":
+                return 소공;
+            case "신교":
+                return 신교;
+            case "안국":
+                return 안국;
+            case "안국역":
+                return 안국역;
+            case "열린마당":
+                return 열린마당;
+            case "염천":
+                return 염천;
+            case "옥인":
+                return 옥인;
+            case "을지1":
+                return 을지1;
+            case "을지2":
+                return 을지2;
+            case "을지3":
+                return 을지3;
+            case "의주":
+                return 의주;
+            case "인사동":
+                return 인사동;
+            case "재동초":
+                return 재동초;
+            case "적선":
+                return 적선;
+            case "정동":
+                return 정동;
+            case "정부청사":
+                return 정부청사;
+            case "종로1":
+                return 종로1;
+            case "종로2":
+                return 종로2;
+            case "종로3":
+                return 종로3;
+            case "창덕궁":
+                return 창덕궁;
+            case "청계2":
+                return 청계2;
+            case "청계3":
+                return 청계3;
+            case "청계광장":
+                return 청계광장;
+            case "청사별관":
+                return 청사별관;
+            case "태평":
+                return 태평;
+            case "통의":
+                return 통의;
+            case "퇴계1":
+                return 퇴계1;
+            case "퇴계2":
+                return 퇴계2;
+            case "퇴계3":
+                return 퇴계3;
+            case "포시즌":
+                return 포시즌;
+            case "한국은행":
+                return 한국은행;
+            case "환구단":
+                return 환구단;
+            default:
+                break;
+        }
+        return null;
+    }
+    
+    //콤보박스
+    @FXML
+    ComboBox cb;
+    
     //레이블
     @FXML
     Label currentTimeLbl;
     @FXML
     Label currentDateLbl;
+
+    //페인
+    @FXML
+    AnchorPane map;
+
+    //프로그레스바
+    @FXML
+    ProgressBar pb;
+
+    @FXML
+    ProgressIndicator pi;
 
     //그래프의 노드를 Circle로 표현. 총64개.
     @FXML
@@ -759,7 +413,7 @@ public class ViewController implements Initializable {
     @FXML
     private Circle 남대문;
     @FXML
-    private Circle 남신육교;
+    private Circle 남산육교;
     @FXML
     private Circle 내자;
     @FXML
@@ -870,37 +524,45 @@ public class ViewController implements Initializable {
     private Circle 환구단;
 
     @FXML
-    public void onPlayClicked(ActionEvent event) throws InterruptedException {
-        //service.scheduleAtFixedRate(shit, 0, 1, TimeUnit.SECONDS);
-        //timeProgress = System.currentTimeLblMillis(); 
-        //runging();
-    }
-
-    @FXML
     public void onNextClicked(ActionEvent event) {
-        if (vc.getCurrentTime() == null) { //currentTime이 없을때. 초시 시간일때
-            vc.setCurrentTime(vc.getInitialTime());
-            vc.setCurrentTime(vc.getCurrentTime().plusMinutes(10));
+        if (getCurrentTime() == null) { //currentTime이 없을때. 초시 시간일때
+            setCurrentTime(getInitialTime());
+            setCurrentTime(getCurrentTime().plusMinutes(10));
         } else {
-            vc.setCurrentTime(vc.getCurrentTime().plusMinutes(10));
+            setCurrentTime(getCurrentTime().plusMinutes(10));
         }
-        currentTimeLbl.setText(vc.getCurrentTime().toString());
+        currentTimeLbl.setText(getCurrentTime().toString());
         checkInProgressParades();
         calcHeadDistanceAndName();
         calcTailDistanceAndName();
         paintActivatedNodes();
+        //pi.setProgress();
+        //pb.setProgress();
+        /*
+        System.out.println(getParadeInfoMap().get("태극기국민평의회").getHeadName());
+        System.out.println(getParadeInfoMap().get("태극기국민평의회").getHeadDistance());
+        System.out.println(getParadeInfoMap().get("태극기국민평의회").getTailName());
+        System.out.println(getParadeInfoMap().get("태극기국민평의회").getTailDistance());
+        System.out.println("");*/
     } //Next 버튼을 누르면 현재시간 10분을 추가하고 그래프가 변화.
 
     @FXML
-    public void onPrevClicked(ActionEvent event) {
-        if (vc.getCurrentTime() != null && vc.getCurrentTime().isAfter(vc.getInitialTime())) {
-            vc.setCurrentTime(vc.getCurrentTime().minusMinutes(10));
-            currentTimeLbl.setText(vc.getCurrentTime().toString());
-        }
+    public void onResetClicked(ActionEvent event) {
+        currentTime = null;
+        currentTimeLbl.setText(getInitialTime().toString());
+        getParadeInfoMap().keySet().forEach((key) -> {
+            getParadeInfoMap().get(key).resetValues();
+        });
+        resetAllNodeColor();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        currentTimeLbl.setText(vc.getInitialTime().toString());
+        currentDateLbl.setText(getSimulationDate().toString());
+        //currentTimeLbl.setText(getInitialTime().toString());
+        drawAllEdges();
+        for (String key : getWholeGraph().keySet()) {
+            cb.getItems().add(key);
+        }
     }
 }
