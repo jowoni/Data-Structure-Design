@@ -24,6 +24,7 @@ public class ParadeInfo {
     private final ArrayList<String> paradeRoute; //행진 경로의 ArrayList<String>
     private float paradeSpeed;                   //행진 진행 속도
     private final Color circleColor;
+    private String destNode;
 
     ParadeInfo(int paradeLength, LocalTime startTime, LocalTime endTime) {
         this.paradeLength = paradeLength;
@@ -35,6 +36,7 @@ public class ParadeInfo {
         inProgress = false;
         paradeRoute = new ArrayList<>(); 
         circleColor = Color.color(Math.random(), Math.random(), Math.random());
+        destNode = null;
     }
     
     void resetValues(){
@@ -84,6 +86,12 @@ public class ParadeInfo {
     }
     Color getCircleColor(){
         return circleColor;
+    }
+    String getDestNode(){
+        return destNode;
+    }
+    void setDestNode(String destNode){
+        this.destNode = destNode;
     }
     void setInProgress(boolean inProgress){
         this.inProgress = inProgress;

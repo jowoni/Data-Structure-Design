@@ -13,9 +13,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
@@ -72,6 +69,9 @@ public class ExcelRead {
             paradeRouteText = workbook.getSheetAt(1).getRow(j).getCell(4).getStringCellValue();
             paradeInfoMap.put(keyName, new ParadeInfo(paradeLength, paradeStartTime, paradeEndTime));
             paradeInfoMap.get(keyName).getParadeRoute().addAll(Arrays.asList(paradeRouteText.split("→")));
+            
+            //종착 교차로 노드 destNode에 저장.
+            paradeInfoMap.get(keyName).setDestNode(paradeInfoMap.get(keyName).getParadeRoute().get(paradeInfoMap.get(keyName).getParadeRoute().size()-1));
         }
         
         fis.close();

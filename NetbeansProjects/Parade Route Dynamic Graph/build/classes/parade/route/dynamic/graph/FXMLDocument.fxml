@@ -123,7 +123,7 @@
                      </font>
                   </Label>
                   <ProgressIndicator fx:id="pi" layoutX="216.0" layoutY="240.0" prefHeight="35.0" prefWidth="30.0" progress="0.0" />
-                  <ComboBox fx:id="cb" layoutX="29.0" layoutY="332.0" prefHeight="22.0" prefWidth="221.0" promptText="Choose Parade" />
+                  <ComboBox fx:id="cb" layoutX="32.0" layoutY="332.0" onAction="#onComboBoxChecked" prefHeight="23.0" prefWidth="221.0" promptText="Choose Parade" />
                   <Separator layoutX="14.0" layoutY="313.0" prefHeight="3.0" prefWidth="258.0" />
                </children>
             </AnchorPane>

@@ -33,6 +33,10 @@ public class ParadeRouteDynamicGraph extends Application {
     public static void main(String[] args) throws Exception {
         input = new ExcelRead();
         vc = new ViewController();
+        //System.out.println("총 길이 :" + vc.getParadeInfoMap().get("새한국").getRouteLength());
+        //System.out.println("총 시간 : " + vc.getParadeInfoMap().get("새한국").getTotalTime());
+        //System.out.println("속력 : " + vc.getParadeInfoMap().get("새한국").getParadeSpeed());
+        //System.out.println("종착지 : " + vc.getParadeInfoMap().get("새한국").getDestNode());
         launch(args);
     }
 }
