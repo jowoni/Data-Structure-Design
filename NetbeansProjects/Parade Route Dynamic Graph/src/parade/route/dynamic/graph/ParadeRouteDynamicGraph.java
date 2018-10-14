@@ -17,26 +17,25 @@ import javafx.stage.Stage;
  */
 public class ParadeRouteDynamicGraph extends Application {
     
-    public static ViewController vc;
+    public static ViewController vc;   // ViewController, ExcelRead 인스턴스를 멤버 변수로
     public static ExcelRead input;
     
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        
         Scene scene = new Scene(root);
-        
         stage.setScene(scene);
         stage.show();
-    }
+    }   // FXML 파일을 로드(기본)
     
     public static void main(String[] args) throws Exception {
-        input = new ExcelRead();
+        input = new ExcelRead();       // ViewController, ExcelRead 인스턴스 생성
         vc = new ViewController();
-        //System.out.println("총 길이 :" + vc.getParadeInfoMap().get("새한국").getRouteLength());
-        //System.out.println("총 시간 : " + vc.getParadeInfoMap().get("새한국").getTotalTime());
-        //System.out.println("속력 : " + vc.getParadeInfoMap().get("새한국").getParadeSpeed());
-        //System.out.println("종착지 : " + vc.getParadeInfoMap().get("새한국").getDestNode());
+        /*
+        System.out.println("총 길이 :" + vc.getParadeInfoMap().get("새한국").getRouteLength());
+        System.out.println("총 시간 : " + vc.getParadeInfoMap().get("새한국").getTotalTime());
+        System.out.println("속력 : " + vc.getParadeInfoMap().get("새한국").getParadeSpeed());
+        System.out.println("종착지 : " + vc.getParadeInfoMap().get("새한국").getDestNode());*/
         launch(args);
     }
 }

@@ -6,7 +6,6 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
@@ -101,12 +100,10 @@
                   </Label>
                   <Button fx:id="reset" layoutX="31.0" layoutY="111.0" mnemonicParsing="false" onAction="#onResetClicked" prefHeight="46.0" prefWidth="108.0" text="Reset" />
                   <Button fx:id="next" layoutX="155.0" layoutY="111.0" mnemonicParsing="false" onAction="#onNextClicked" prefHeight="46.0" prefWidth="108.0" text="Next" />
-                  <Label layoutX="85.0" layoutY="168.0" prefHeight="37.0" prefWidth="122.0" text="Time Control Slide" />
-                  <Separator layoutX="14.0" layoutY="229.0" prefHeight="3.0" prefWidth="258.0" />
-                  <ProgressBar fx:id="pb" layoutX="31.0" layoutY="280.0" prefHeight="18.0" prefWidth="221.0" progress="0.0" />
-                  <Slider layoutX="31.0" layoutY="205.0" prefHeight="14.0" prefWidth="221.0" />
-                  <Label layoutX="74.0" layoutY="246.0" text="Overall Parade Progress" />
-                  <TextArea layoutX="15.0" layoutY="374.0" prefHeight="368.0" prefWidth="258.0" />
+                  <Separator layoutX="14.0" layoutY="179.0" prefHeight="3.0" prefWidth="258.0" />
+                  <ProgressBar fx:id="pb" layoutX="31.0" layoutY="230.0" prefHeight="18.0" prefWidth="221.0" progress="0.0" />
+                  <Label layoutX="74.0" layoutY="196.0" text="Overall Parade Progress" />
+                  <TextArea fx:id="ta" layoutX="15.0" layoutY="323.0" prefHeight="419.0" prefWidth="258.0" />
                   <Label fx:id="currentTimeLbl" layoutX="182.0" layoutY="68.0" prefHeight="24.0" prefWidth="62.0">
                      <font>
                         <Font size="15.0" />
@@ -122,9 +119,9 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <ProgressIndicator fx:id="pi" layoutX="216.0" layoutY="240.0" prefHeight="35.0" prefWidth="30.0" progress="0.0" />
-                  <ComboBox fx:id="cb" layoutX="32.0" layoutY="332.0" onAction="#onComboBoxChecked" prefHeight="23.0" prefWidth="221.0" promptText="Choose Parade" />
-                  <Separator layoutX="14.0" layoutY="313.0" prefHeight="3.0" prefWidth="258.0" />
+                  <ProgressIndicator fx:id="pi" layoutX="216.0" layoutY="190.0" prefHeight="35.0" prefWidth="30.0" progress="0.0" />
+                  <ComboBox fx:id="cb" layoutX="32.0" layoutY="282.0" onAction="#onComboBoxChecked" prefHeight="23.0" prefWidth="221.0" promptText="Choose Parade" />
+                  <Separator layoutX="14.0" layoutY="263.0" prefHeight="3.0" prefWidth="258.0" />
                </children>
             </AnchorPane>
          </items>

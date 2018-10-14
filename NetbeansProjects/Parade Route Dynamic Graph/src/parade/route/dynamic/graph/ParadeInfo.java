@@ -14,19 +14,19 @@ import javafx.scene.paint.Color;
  */
 public class ParadeInfo {
 
-    private boolean inProgress;                  //행진의 진행여부를 나타냄
-    private final int paradeLength;              //행진의 길이(인원수)
-    private int routeLength;                     //행진 경로의 총길이
-    private float headDistance, tailDistance;    //Head, Tail까지의 거리
-    private String headName, tailName;           //Head, Tail 해당 교차로
-    private final LocalTime startTime, endTime;  //행진 시작, 종료 시간
-    private final Duration totalTime;            //총 행진 시간
-    private final ArrayList<String> paradeRoute; //행진 경로의 ArrayList<String>
-    private float paradeSpeed;                   //행진 진행 속도
-    private final Color circleColor;
-    private String destNode;
+    private boolean inProgress;                  // 행진의 진행여부
+    private final int paradeLength;              // 행진의 길이(인원수)
+    private int routeLength;                     // 행진 경로의 총길이
+    private float headDistance, tailDistance;    // Head, Tail까지의 거리
+    private String headName, tailName;           // Head, Tail 해당 교차로
+    private final LocalTime startTime, endTime;  // 행진 시작, 종료 시간
+    private final Duration totalTime;            // 총 행진 시간
+    private final ArrayList<String> paradeRoute; // 행진 경로의 ArrayList<String>
+    private float paradeSpeed;                   // 행진 진행 속도
+    private final Color circleColor;             // 행진이 노드로 표시될 색(Random)
+    private String destNode;                     // 종착 교차로
 
-    ParadeInfo(int paradeLength, LocalTime startTime, LocalTime endTime) {
+    ParadeInfo(int paradeLength, LocalTime startTime, LocalTime endTime) {  
         this.paradeLength = paradeLength;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -37,7 +37,7 @@ public class ParadeInfo {
         paradeRoute = new ArrayList<>(); 
         circleColor = Color.color(Math.random(), Math.random(), Math.random());
         destNode = null;
-    }
+    }   // 생성자
     
     void resetValues(){
         inProgress = false;
@@ -45,9 +45,9 @@ public class ParadeInfo {
         tailName = null;
         headDistance = 0;
         tailDistance = 0;
-    }
+    }   // 행진 진척 정보를 초기화
     
-    // 게터 세터
+    // getter setter methods
     boolean getInProgress(){
         return inProgress;
     }

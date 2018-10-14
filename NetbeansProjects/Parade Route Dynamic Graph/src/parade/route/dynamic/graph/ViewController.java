@@ -23,7 +23,6 @@ import static parade.route.dynamic.graph.ParadeRouteDynamicGraph.input;
 import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.LineBuilder;
-import static parade.route.dynamic.graph.ParadeRouteDynamicGraph.vc;
 
 /**
  *
@@ -31,59 +30,58 @@ import static parade.route.dynamic.graph.ParadeRouteDynamicGraph.vc;
  */
 public class ViewController implements Initializable {
 
-    private static Map<String, Map<String, Integer>> wholeGraph = input.getWholeGraph(); // 전체 지도
-    private static Map<String, ParadeInfo> paradeInfoMap = input.getParadeInfoMap();     // 시위대명별 행진정보
-    private static LocalDate simulationDate = input.getDate();
-    private static LocalTime currentTime = null;
-    private static String paradeChoice = null;
+    private static final Map<String, Map<String, Integer>> wholeGraph = input.getWholeGraph(); // 전체 지도
+    private static final Map<String, ParadeInfo> paradeInfoMap = input.getParadeInfoMap();     // 시위대명별 행진정보
+    private static final LocalDate simulationDate = input.getDate();                           // 입력받은 행진 날짜 정보
+    private static LocalTime currentTime = null;                                               // 현재 시간
+    private static String paradeChoice = null;                                                 // 현재 선택된 행진 이름
 
-    // Local Variable Getter & Setter Methods
+    // getter setter methods
     Map<String, Map<String, Integer>> getWholeGraph() {
         return wholeGraph;
-    }
+    }   // wholeGraph getter method
 
     Map<String, ParadeInfo> getParadeInfoMap() {
         return paradeInfoMap;
-    }
+    }          // paradeInfoMap getter method
 
     LocalDate getSimulationDate() {
         return simulationDate;
-    }
+    }                       // simulationDate getter method
 
     LocalTime getCurrentTime() {
         return currentTime;
-    }
+    }                          // currentTime getter method
 
-    // 중요한 함수들
+    void setCurrentTime(LocalTime currentTime) {
+        ViewController.currentTime = currentTime;
+    }          // currentTime setter method
+
+    // 중요한 계산 함수들
     String dijkstra(String startNode, String endNode) {
         int n = wholeGraph.size();     //Node의 수
         int e = 0;                     //Edge의 수
+        e = wholeGraph.keySet().stream().map((key) -> wholeGraph.get(key).size()).reduce(e, Integer::sum); //Edge의 수를 계산
 
-        for (Object key : wholeGraph.keySet()) { //Edge의 수를 계산
-            e += wholeGraph.get(key).size();
-        }
-
-        Map<String, Integer> keyToInteger = new HashMap<>(); //노드들에 int index부여. 노드이름으로 index를 찾을수 있는 Map
+        Map<String, Integer> keyToInteger = new HashMap<>(); // 노드들에 int index부여. 노드이름으로 index를 찾을수 있는 Map
         int keyIndex = 0;
         for (Object key : wholeGraph.keySet()) {
             keyToInteger.put(key.toString(), keyIndex);
             keyIndex++;
         }
-        Map<Integer, String> integerToKey = new HashMap<>(); //index로 노드이름을 찾을수 있는 Map
-        for (Object key : keyToInteger.keySet()) {
+        Map<Integer, String> integerToKey = new HashMap<>(); // index로 노드이름을 찾을수 있는 Map
+        keyToInteger.keySet().forEach((key) -> {
             integerToKey.put((int) keyToInteger.get(key), key.toString());
-        }
-        //System.out.println(integerToKey);
+        });
 
         int distance[] = new int[n];          //최단 거리를 저장할 변수
         boolean[] check = new boolean[n];     //해당 노드를 방문했는지 체크할 변수
-        int maps[][] = new int[n][n];     //노드 간의 거리 배열
-
-        for (Object i : wholeGraph.keySet()) { //노드 간의 거리 계산 및 저장
-            for (Object j : wholeGraph.get(i).keySet()) {
+        int maps[][] = new int[n][n];         //노드 간의 거리 배열
+        wholeGraph.keySet().forEach((i) -> {  //노드 간의 거리 계산 및 저장
+            wholeGraph.get(i).keySet().forEach((j) -> {
                 maps[keyToInteger.get(i)][keyToInteger.get(j)] = wholeGraph.get(i).get(j);
-            }
-        }
+            });
+        });
 
         int v = keyToInteger.get(startNode);
 
@@ -135,10 +133,7 @@ public class ViewController implements Initializable {
                 }
             }
         }
-
-        //동원 0, 청계광장 1
         //결과값 출력. startNode와 endNode까지의 최단거리
-        //System.out.println(distance[keyToInteger.get(endNode)]);
         int mini = 0;
         Object lastKey = null;
         for (Object key : temp.keySet()) {
@@ -150,12 +145,9 @@ public class ViewController implements Initializable {
                 lastKey = key;
             }
         }
-        //System.out.println(temp);
-        //System.out.println(integerToKey.get(lastKey));
-        //inputStringReturnCircle(integerToKey.get(lastKey)).setFill(Color.RED);
         return integerToKey.get(lastKey);
-    } // 두 노드 사이 최단 거리를 계산. 바리케이드 교차로 노드를 String으로 리턴.
-
+    }   // 두 노드 사이 최단 거리를 계산. 바리케이드 교차로 노드를 String으로 리턴. 해당 사이트의 코드 재사용 http://bumbums.tistory.com/4 [범범스의 코딩놀이터]
+    
     void paintBarricadeNodes() {
         ArrayList tempParadeRoute;
         if (getParadeInfoMap().get(paradeChoice).getInProgress() == true && currentTime.isBefore(getParadeInfoMap().get(paradeChoice).getEndTime())) { //행진이 현재 진행중일때
@@ -165,9 +157,10 @@ public class ViewController implements Initializable {
                     //행진이 진행중인 경로의 노드들을 색칠
                     if (wholeGraph.get(getParadeInfoMap().get(paradeChoice).getDestNode()).containsKey(tempParadeRoute.get(i).toString()) == false) {
                         if (tempParadeRoute.contains(dijkstra(getParadeInfoMap().get(paradeChoice).getDestNode(), tempParadeRoute.get(i).toString())) == false) {
-                            //시작, 종착 교차로가 인접하지 않고 dijkstra로 계산된 바리케이드 교차로가 행진 진행 교차로에 포함되지 않는 경우에만 색칠.
-                            inputStringReturnCircle(dijkstra(getParadeInfoMap().get(paradeChoice).getDestNode(), tempParadeRoute.get(i).toString())).setFill(Color.RED);
-System.out.println("1 " + dijkstra(getParadeInfoMap().get(paradeChoice).getDestNode(), tempParadeRoute.get(i).toString()));
+                            if (dijkstra(getParadeInfoMap().get(paradeChoice).getDestNode(), tempParadeRoute.get(i).toString()) != null) {
+                                //시작, 종착 교차로가 인접하지 않고 dijkstra로 계산된 바리케이드 교차로가 행진 진행 교차로에 포함되지 않고 dijkstra input node들이 인접 노드들이 아닌 경우에만 색칠
+                                inputStringReturnCircle(dijkstra(getParadeInfoMap().get(paradeChoice).getDestNode(), tempParadeRoute.get(i).toString())).setFill(Color.RED);
+                            }
                         }
                     }
                 }
@@ -178,9 +171,10 @@ System.out.println("1 " + dijkstra(getParadeInfoMap().get(paradeChoice).getDestN
                         //행진이 진행중인 경로의 노드들을 색칠.
                         if (wholeGraph.get(getParadeInfoMap().get(paradeChoice).getDestNode()).containsKey(tempParadeRoute.get(i).toString()) == false) {
                             if (tempParadeRoute.subList(tempParadeRoute.lastIndexOf(getParadeInfoMap().get(paradeChoice).getTailName()), tempParadeRoute.lastIndexOf(getParadeInfoMap().get(paradeChoice).getHeadName()) + 1).contains(dijkstra(getParadeInfoMap().get(paradeChoice).getDestNode(), tempParadeRoute.get(i).toString())) == false) {
-                                //시작, 종착 교차로가 인접하지 않고 dijkstra로 계산된 바리케이드 교차로가 행진 진행 교차로에 포함되지 않는 경우에만 색칠.
-                                inputStringReturnCircle(dijkstra(getParadeInfoMap().get(paradeChoice).getDestNode(), tempParadeRoute.get(i).toString())).setFill(Color.RED);
-System.out.println("2 " +dijkstra( getParadeInfoMap().get(paradeChoice).getDestNode(), tempParadeRoute.get(i).toString()));
+                                if (dijkstra(getParadeInfoMap().get(paradeChoice).getDestNode(), tempParadeRoute.get(i).toString()) != null) {
+                                    //시작, 종착 교차로가 인접하지 않고 dijkstra로 계산된 바리케이드 교차로가 행진 진행 교차로에 포함되지 않고 dijkstra input node들이 인접 노드들이 아닌 경우에만 색칠
+                                    inputStringReturnCircle(dijkstra(getParadeInfoMap().get(paradeChoice).getDestNode(), tempParadeRoute.get(i).toString())).setFill(Color.RED);
+                                }
                             }
                         }
                     }
@@ -189,32 +183,17 @@ System.out.println("2 " +dijkstra( getParadeInfoMap().get(paradeChoice).getDestN
                         //행진이 진행중인 경로의 노드들을 색칠.
                         if (wholeGraph.get(getParadeInfoMap().get(paradeChoice).getDestNode()).containsKey(tempParadeRoute.get(i).toString()) == false) {
                             if (tempParadeRoute.subList(tempParadeRoute.indexOf(getParadeInfoMap().get(paradeChoice).getTailName()), tempParadeRoute.indexOf(getParadeInfoMap().get(paradeChoice).getHeadName()) + 1).contains(dijkstra(getParadeInfoMap().get(paradeChoice).getDestNode(), tempParadeRoute.get(i).toString())) == false) {
-                                //시작, 종착 교차로가 인접하지 않고 dijkstra로 계산된 바리케이드 교차로가 행진 진행 교차로에 포함되지 않는 경우에만 색칠.
-                                inputStringReturnCircle(dijkstra(getParadeInfoMap().get(paradeChoice).getDestNode(), tempParadeRoute.get(i).toString())).setFill(Color.RED);
-System.out.println("3 " +dijkstra(getParadeInfoMap().get(paradeChoice).getDestNode(), tempParadeRoute.get(i).toString()));
+                                if (dijkstra(getParadeInfoMap().get(paradeChoice).getDestNode(), tempParadeRoute.get(i).toString()) != null) {
+                                    //시작, 종착 교차로가 인접하지 않고 dijkstra로 계산된 바리케이드 교차로가 행진 진행 교차로에 포함되지 않고 dijkstra input node들이 인접 노드들이 아닌 경우에만 색칠
+                                    inputStringReturnCircle(dijkstra(getParadeInfoMap().get(paradeChoice).getDestNode(), tempParadeRoute.get(i).toString())).setFill(Color.RED);
+                                }
                             }
                         }
                     }
                 }
             }
-        } System.out.println("");
-    }
-
-    void setWholeGraph(Map<String, Map<String, Integer>> wholeGraph) {
-        ViewController.wholeGraph = wholeGraph;
-    } // set으로 시작하는 함수들은 거의 Data Input으로 받아온 정보들 이용해서 그래프와 환경 구성
-
-    void setCurrentTime(LocalTime currentTime) {
-        ViewController.currentTime = currentTime;
-    }                       //
-
-    void setParadeInfoMap(Map<String, ParadeInfo> paradeInfoMap) {
-        ViewController.paradeInfoMap = paradeInfoMap;
-    }    //
-
-    void setSimulationDate(LocalDate simulationDate) {
-        ViewController.simulationDate = simulationDate;
-    }                //            
+        }
+    }                         // dijkstra로 계산된 바리케이드 교차로 노드를 빨강으로 색칠
 
     void checkInProgressParades() {
         if ((getParadeInfoMap().get(paradeChoice).getStartTime().equals(getCurrentTime()) || getParadeInfoMap().get(paradeChoice).getStartTime().isBefore(getCurrentTime()))
@@ -226,20 +205,20 @@ System.out.println("3 " +dijkstra(getParadeInfoMap().get(paradeChoice).getDestNo
             resetAllNodeColor();
         }
 
-    }   // 현재 진행중인 행진 확인
+    }       // 현재 진행중인 행진 확인
 
-    
     void resetAllNodeColor() {
-        for (String key : wholeGraph.keySet()) {
+        wholeGraph.keySet().forEach((key) -> {
             inputStringReturnCircle(key).setFill(Color.rgb(232, 227, 227));
-        }
-    } // 모든 노드 기본색으로 색칠하기
+        });
+    }              // 모든 노드 기본색으로 색칠하기
 
     void calcHeadDistanceAndName() {
         int accDistance;
         ArrayList tempParadeRoute;
         if (getParadeInfoMap().get(paradeChoice).getStartTime().isBefore(getCurrentTime())
-                && ((getParadeInfoMap().get(paradeChoice).getEndTime()).equals(getCurrentTime()) || (getParadeInfoMap().get(paradeChoice).getEndTime()).isAfter(getCurrentTime()))) { //현재시간이 행진시작시간 이후일 때만
+                && ((getParadeInfoMap().get(paradeChoice).getEndTime()).equals(getCurrentTime())
+                || (getParadeInfoMap().get(paradeChoice).getEndTime()).isAfter(getCurrentTime()))) { //현재시간이 행진시작시간 이후일 때만
             getParadeInfoMap().get(paradeChoice).setHeadDistance( //Head 까지의 거리 계산
                     getParadeInfoMap().get(paradeChoice).getStartTime().until(getCurrentTime(), ChronoUnit.MINUTES)
                     * getParadeInfoMap().get(paradeChoice).getParadeSpeed());
@@ -278,49 +257,49 @@ System.out.println("3 " +dijkstra(getParadeInfoMap().get(paradeChoice).getDestNo
             getParadeInfoMap().get(paradeChoice).setHeadDistance(0);
         }
 
-    }   // 행진의 Head의 Distance와 Head 교차로 계산
+    }      // 행진 Head의 Distance와 Head 교차로 계산
 
     void calcTailDistanceAndName() {
         int accDistance;
         ArrayList tempParadeRoute;
-
-        if (getParadeInfoMap().get(paradeChoice).getStartTime().isBefore(getCurrentTime()) //현재시간이 행진시작시간 이후이고 Tail(Head - 행진길이) >= 0 일때
-                && getParadeInfoMap().get(paradeChoice).getHeadDistance() - getParadeInfoMap().get(paradeChoice).getParadeLength() >= 0
-                && ((getParadeInfoMap().get(paradeChoice).getEndTime()).isAfter(getCurrentTime())) || (getParadeInfoMap().get(paradeChoice).getEndTime()).equals(getCurrentTime())) {
+        if (getParadeInfoMap().get(paradeChoice).getStartTime().isBefore(getCurrentTime()) // 현재시간이 행진시작시간 이후이고 Tail(= Head - 행진길이) >= 0 일때
+                && (getParadeInfoMap().get(paradeChoice).getHeadDistance() - getParadeInfoMap().get(paradeChoice).getParadeLength() >= 0)
+                && (((getParadeInfoMap().get(paradeChoice).getEndTime()).isAfter(getCurrentTime())) || (getParadeInfoMap().get(paradeChoice).getEndTime()).equals(getCurrentTime()))) {
             getParadeInfoMap().get(paradeChoice).setTailDistance(getParadeInfoMap().get(paradeChoice).getHeadDistance() - getParadeInfoMap().get(paradeChoice).getParadeLength()); //Tail까지 거리 계산
-            if (getParadeInfoMap().get(paradeChoice).getTailDistance() == 0) { //Tail까지 거리가 0일때
-                getParadeInfoMap().get(paradeChoice).setTailName(getParadeInfoMap().get(paradeChoice).getParadeRoute().get(0)); //행진경로 첫번째 노드를 TailName으로 설정
-            } else if (getParadeInfoMap().get(paradeChoice).getTailDistance() < getParadeInfoMap().get(paradeChoice).getRouteLength()) { //Tail이 행진 경로 안에 있을때
+            if (getParadeInfoMap().get(paradeChoice).getTailDistance() == 0) { // Tail까지 거리가 0일때
+                getParadeInfoMap().get(paradeChoice).setTailName(getParadeInfoMap().get(paradeChoice).getParadeRoute().get(0));          // 행진경로 첫번째 노드를 TailName으로 설정
+            } else if (getParadeInfoMap().get(paradeChoice).getTailDistance() < getParadeInfoMap().get(paradeChoice).getRouteLength()) { // Tail이 행진 경로 안에 있을때
                 accDistance = 0;
-                tempParadeRoute = getParadeInfoMap().get(paradeChoice).getParadeRoute(); //행진정보별 행진경로ArrayList
-                for (int i = 0; i < tempParadeRoute.size() - 1; i++) {             //행진정보별 행진경로ArrayList 순환
+                tempParadeRoute = getParadeInfoMap().get(paradeChoice).getParadeRoute(); // 행진정보별 행진경로ArrayList
+                for (int i = 0; i < tempParadeRoute.size() - 1; i++) {                   // 행진정보별 행진경로ArrayList 순환
                     accDistance += getWholeGraph().get(tempParadeRoute.get(i)).get(tempParadeRoute.get(i + 1));
-                    if (i == 0 && accDistance >= getParadeInfoMap().get(paradeChoice).getTailDistance()) { //Tail이 방금 출발해서 처음 노드 도달도 못한 경우 (Tail이 첫번째 노드와 같은 경우도 포함)
+                    if (i == 0 && accDistance >= getParadeInfoMap().get(paradeChoice).getTailDistance()) { // Tail이 방금 출발해서 처음 노드 도달도 못한 경우 (Tail이 첫번째 노드와 같은 경우도 포함)
                         getParadeInfoMap().get(paradeChoice).setTailName(tempParadeRoute.get(i).toString());
                         break;
                     } else if (accDistance < getParadeInfoMap().get(paradeChoice).getTailDistance() && getParadeInfoMap().get(paradeChoice).getTailDistance() < accDistance + getWholeGraph().get(tempParadeRoute.get(i + 1)).get(tempParadeRoute.get(i + 2))) {
-                        //Tail거리가 accDistance, accDistance(Next)사이일때         
+                        // Tail거리가 accDistance, accDistance(Next)사이일때         
                         getParadeInfoMap().get(paradeChoice).setTailName(tempParadeRoute.get(i + 1).toString());
                         break;
-                    } else if (accDistance == getParadeInfoMap().get(paradeChoice).getTailDistance()) { //Tail이 완전히 교차로 위에 있을때
+                    } else if (accDistance == getParadeInfoMap().get(paradeChoice).getTailDistance()) { // Tail이 완전히 교차로 위에 있을때
                         getParadeInfoMap().get(paradeChoice).setTailName(tempParadeRoute.get(i + 1).toString());
                         break;
                     }
                 }
-            } else { //Tail이 경로밖에 있을때
+            } else { // Tail이 경로밖에 있을때
+                // Tail 교차로 이름을 행진 경로상 마지막 노드로 설정
                 getParadeInfoMap().get(paradeChoice).setTailName(getParadeInfoMap().get(paradeChoice).getParadeRoute().get(getParadeInfoMap().get(paradeChoice).getParadeRoute().size() - 1));
-                //TailName은 행진경로 ArrayList 마지막 노드로 저장
+                getParadeInfoMap().get(paradeChoice).setTailDistance(getParadeInfoMap().get(paradeChoice).getRouteLength());
             }
         } else if ((getParadeInfoMap().get(paradeChoice).getEndTime()).equals(getCurrentTime())) { //행진종료시간이 현재시간과 같을때
+            // Tail 교차로 이름을 행진 경로상 마지막 노드로 설정
             getParadeInfoMap().get(paradeChoice).setTailName(getParadeInfoMap().get(paradeChoice).getParadeRoute().get(getParadeInfoMap().get(paradeChoice).getParadeRoute().size() - 1));
-
-        } else if ((getParadeInfoMap().get(paradeChoice).getEndTime()).isBefore(getCurrentTime())) { //현재시간이 행진종료시간 후일때(행진이 종료)
-            //해당 행진의 모든것을 null로 되돌려버리는 알고리즘.
-            getParadeInfoMap().get(paradeChoice).setTailName(null);
+            getParadeInfoMap().get(paradeChoice).setTailDistance(getParadeInfoMap().get(paradeChoice).getRouteLength());
+        } else if ((getParadeInfoMap().get(paradeChoice).getEndTime()).isBefore(getCurrentTime())) { // 현재시간이 행진종료시간 후일때(행진이 종료)
+            getParadeInfoMap().get(paradeChoice).setTailName(null); // 해당 행진의 모든것을 null로 되돌려버리는 알고리즘.
             getParadeInfoMap().get(paradeChoice).setTailDistance(0);
         }
 
-    }   // 행진의 Tail의 Distance와 Tail 교차로 계산                       
+    }      // 행진 Tail의 Distance와 Tail 교차로 계산                       
 
     void paintActivatedNodes() {
         ArrayList tempParadeRoute;
@@ -354,14 +333,14 @@ System.out.println("3 " +dijkstra(getParadeInfoMap().get(paradeChoice).getDestNo
                 }
             }
         }
-    }       // 현재 행진이 지나가고 있는 노드들 색 변화
+    }          // 현재 행진이 지나가고 있는 노드들 색 변화
 
     void drawAllEdges() {
         double x1, y1, x2, y2;
-        for (String key : getWholeGraph().keySet()) {
+        for (String key : getWholeGraph().keySet()) { // 모든 노드에 대해서
             x1 = inputStringReturnCircle(key).getLayoutX();
             y1 = inputStringReturnCircle(key).getLayoutY();
-            for (String key2 : getWholeGraph().get(key).keySet()) {
+            for (String key2 : getWholeGraph().get(key).keySet()) { // 현재 iterate중인 노드의 인접 노드에 대해서 두 노드의 중심점 사이에 Line 출력
                 x2 = inputStringReturnCircle(key2).getLayoutX();
                 y2 = inputStringReturnCircle(key2).getLayoutY();
                 map.getChildren().add(LineBuilder.create()
@@ -375,13 +354,43 @@ System.out.println("3 " +dijkstra(getParadeInfoMap().get(paradeChoice).getDestNo
                 );
             }
         }
-        for (String key : getWholeGraph().keySet()) {
+        for (String key : getWholeGraph().keySet()) { // 모든 노드에 대해서
             inputStringReturnCircle(key).toFront();
             x1 = inputStringReturnCircle(key).getLayoutX();
             y1 = inputStringReturnCircle(key).getLayoutY();
-            map.getChildren().add(LabelBuilder.create().text(key).layoutX(x1).layoutY(y1).build());
+            map.getChildren().add(LabelBuilder.create().text(key).layoutX(x1).layoutY(y1).build()); // 현재 iterated중인 노드의 중심점에 교차로 이름 Label 출력
         }
-    }
+    }                  // 프로그램 시작시 모든 Edge와 교차로 Label을 화면에 출력
+
+    void showProgressInTextArea() {
+        if (getParadeInfoMap().get(paradeChoice).getInProgress() == true) { // 행진이 현재 진행중일때
+            if (paradeInfoMap.get(paradeChoice).getStartTime().plusMinutes(10).equals(currentTime)) { // 행진 시작하면 해당 문구 출력
+                ta.appendText("PARADE START!" + '\n' + '\n');
+            }
+            ta.appendText("Time : " + currentTime + '\n'); // 현재 시간 출력
+            if (paradeInfoMap.get(paradeChoice).getHeadDistance() >= paradeInfoMap.get(paradeChoice).getRouteLength()) { // Head가 종착했을때 해당 문구 출력
+                ta.appendText("Head : " + paradeInfoMap.get(paradeChoice).getHeadName() + "(Arrived)" + '\n');
+            } else { // Head의 시작 교차로부터 거리 출력
+                ta.appendText("Head : " + paradeInfoMap.get(paradeChoice).getHeadName() + "(" + paradeInfoMap.get(paradeChoice).getHeadDistance() + ")" + '\n');
+            }
+            if (paradeInfoMap.get(paradeChoice).getTailName() == null) { // Tail이 아직 존재하지 않을때 해당 문구 출력
+                ta.appendText("Tail  : " + paradeInfoMap.get(paradeChoice).getParadeRoute().get(0) + "(In starting point)" + '\n' + '\n');
+            } else if (paradeInfoMap.get(paradeChoice).getTailDistance() >= paradeInfoMap.get(paradeChoice).getRouteLength()) { // Tail이 종착했을때 해당 문구 출력
+                ta.appendText("Tail  : " + paradeInfoMap.get(paradeChoice).getTailName() + "(Arrived)" + '\n' + '\n');
+            } else { // Tail의 시작 교차로부터 거리 출력
+                ta.appendText("Tail  : " + paradeInfoMap.get(paradeChoice).getTailName() + "(" + paradeInfoMap.get(paradeChoice).getTailDistance() + ")" + '\n' + '\n');
+            }
+        }
+    }       // TextArea에 행진의 진행 상황을 출력
+
+    void updateProgressBarAndIndicator() {
+        if (getParadeInfoMap().get(paradeChoice).getInProgress() == true) { // 행진이 현재 진행중일때
+            pb.setProgress((float) getParadeInfoMap().get(paradeChoice).getStartTime().until(currentTime, ChronoUnit.MINUTES)
+                    / getParadeInfoMap().get(paradeChoice).getStartTime().until(getParadeInfoMap().get(paradeChoice).getEndTime(), ChronoUnit.MINUTES));
+            pi.setProgress((float) getParadeInfoMap().get(paradeChoice).getStartTime().until(currentTime, ChronoUnit.MINUTES)
+                    / getParadeInfoMap().get(paradeChoice).getStartTime().until(getParadeInfoMap().get(paradeChoice).getEndTime(), ChronoUnit.MINUTES));
+        }
+    } // 행진 진척도인 Progress Bar & Indicator를 update
 
     Circle inputStringReturnCircle(String inputString) {
         switch (inputString) {
@@ -517,32 +526,29 @@ System.out.println("3 " +dijkstra(getParadeInfoMap().get(paradeChoice).getDestNo
                 break;
         }
         return null;
-    }
+    } // String을 인수에다 넣으면 같은 이름의 Circle을 리턴
 
-    //콤보박스
     @FXML
-    ComboBox cb;
+    TextArea ta;            // 행진 진척 상황을 나타내는 TextArea
 
-    //레이블
     @FXML
+    ComboBox cb;            // 행진 선택하는 콤보박스
+
+    @FXML                   // 현재 날짜, 시간을 나타내는 Label
     Label currentTimeLbl;
     @FXML
     Label currentDateLbl;
 
-    //페인
-    @FXML
+    @FXML                   // 지도가 포함되어 있는 AnchorPane
     AnchorPane map;
 
-    //프로그레스바
-    @FXML
+    @FXML                   // 행진 진척을 나타내는 ProgressBar, ProgressIndicator
     ProgressBar pb;
-
     @FXML
     ProgressIndicator pi;
 
-    //그래프의 노드를 Circle로 표현. 총64개.
     @FXML
-    private Circle 개풍;
+    private Circle 개풍;     //그래프의 노드를 Circle로 표현. 총64개.
     @FXML
     private Circle 경희궁;
     @FXML
@@ -677,12 +683,12 @@ System.out.println("3 " +dijkstra(getParadeInfoMap().get(paradeChoice).getDestNo
         currentTimeLbl.setText(paradeInfoMap.get(paradeChoice).getStartTime().toString());
         getParadeInfoMap().get(paradeChoice).resetValues();
         resetAllNodeColor();
-    }
+    }     // 콤복 박스를 에서 행진을 선택하면 앞으로 해당 행진 정보를 Load하게끔 설정
 
     @FXML
     public void onNextClicked(ActionEvent event) {
-        if (paradeChoice != null) {
-            if (getCurrentTime() == null) { //currentTime이 없을때. 초시 시간일때
+        if (paradeChoice != null) {         // 현재 진행중인 행진이 있을때  
+            if (getCurrentTime() == null) { // currentTime이 없을때. 초시 시간일때
                 setCurrentTime(paradeInfoMap.get(paradeChoice).getStartTime());
                 setCurrentTime(getCurrentTime().plusMinutes(10));
             } else {
@@ -695,11 +701,10 @@ System.out.println("3 " +dijkstra(getParadeInfoMap().get(paradeChoice).getDestNo
             calcTailDistanceAndName();
             paintActivatedNodes();
             paintBarricadeNodes();
-
-            //System.out.println("head : " + getParadeInfoMap().get(paradeChoice).getHeadName() + " " + getParadeInfoMap().get(paradeChoice).getHeadDistance());
-            //System.out.println("tail : " + getParadeInfoMap().get(paradeChoice).getTailName() + " " + getParadeInfoMap().get(paradeChoice).getTailDistance());
+            showProgressInTextArea();
+            updateProgressBarAndIndicator();
         }
-    }//Next 버튼을 누르면 현재시간 10분을 추가하고 그래프가 변화.
+    }        // Next 버튼을 누르면 현재시간 10분을 추가하고 그래프가 알맞게 변화.
 
     @FXML
     public void onResetClicked(ActionEvent event) {
@@ -708,20 +713,18 @@ System.out.println("3 " +dijkstra(getParadeInfoMap().get(paradeChoice).getDestNo
             currentTimeLbl.setText(paradeInfoMap.get(paradeChoice).getStartTime().toString());
             getParadeInfoMap().get(paradeChoice).resetValues();
         }
-        /*
-        getParadeInfoMap().keySet().forEach((key) -> {
-            getParadeInfoMap().get(key).resetValues();
-        });*/
         resetAllNodeColor();
-    }
+        ta.setText("");
+        pi.setProgress(0);
+        pb.setProgress(0);
+    }        // Reset 버튼을 누르면 행진 진척 정보와 현재 시간을 초기화
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        currentDateLbl.setText(getSimulationDate().toString());
-        //currentTimeLbl.setText(getInitialTime().toString());
-        drawAllEdges(); //Edge 그리기
-        for (String key : getParadeInfoMap().keySet()) { //콤보박스에 행진 리스트 추가하고
+        currentDateLbl.setText(getSimulationDate().toString());   // 현재 날짜 Label로 표시       
+        drawAllEdges();                                           // 지도에 Edge 그리기
+        getParadeInfoMap().keySet().forEach((key) -> {            // 콤보박스 행진 목록 추가
             cb.getItems().add(key);
-        }
-    }
+        });
+    }    // GUI 전반적인 초기화
 }
