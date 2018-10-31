@@ -32,9 +32,6 @@
     <jar href="lib\poi-scratchpad-4.0.0.jar" size="1382948" download="eager" />
     <jar href="lib\xmlbeans-3.0.1.jar" size="2582300" download="eager" />
   </resources>
-  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="Parade Route Dynamic Graph" >
-    <param name="requiredFXVersion" value="8.0+"/>
-  </applet-desc>
   <jfx:javafx-desc  width="800" height="600" main-class="parade.route.dynamic.graph.ParadeRouteDynamicGraph"  name="Parade Route Dynamic Graph" />
   <update check="always"/>
 </jnlp>
